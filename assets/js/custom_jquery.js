@@ -329,7 +329,7 @@ $(".school_type li").click(function() {
 
 initAutocomplete();
 
- viewmap();	
+ //viewmap();	
  
  
 }();

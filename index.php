@@ -45,7 +45,7 @@
    <!--slider-->
    <section class="slider">
       <div class="banner">
-         <div class="banner_bg"> <img class="img-responsive" src="<?php echo IMG_PATH;?>slider_pic_3.jpg" alt=""/> </div>
+         <div class="banner_bg"><img class="img-responsive" src="<?php echo SECURE_PATH;?>photos/home_bcg.jpg" alt=""/></div>
          <div class="bann_caption">
             <div class="container">
             <div class="basic_search">
@@ -57,7 +57,7 @@
                 
            <div class="input-group">
                
-               <div class="col-sm-4">
+               <div class="col-sm-4 col-xs-6">
                    <div class="radio  radio-primary">
   <label>
       <input type="radio"  name="entity_type" checked="checked" onclick="$('#entity').val($(this).val());$('#school_entity').val($(this).val());initAutocomplete();" value="school" />
@@ -66,7 +66,7 @@
 </div>
                   
                </div>    
-               <div class="col-sm-4">
+               <div class="col-sm-4  col-xs-6">
                     <div class="radio  radio-primary">
   <label>
       <input type="radio"   name="entity_type" value="nursery" onclick="$('#entity').val($(this).val());$('#school_entity').val($(this).val());initAutocomplete();"/>
@@ -75,7 +75,7 @@
 </div>
                       
                </div>
-               <div class="col-sm-4"></div>
+               <div class="col-sm-4  col-xs-12"></div>
                
     </div>       
                 
@@ -348,7 +348,7 @@
         
           <div class="form-group">
           
-              <div class=" col-sm-4 check">
+              <div class=" col-sm-12 check">
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" class="form-control" name="transportation"   value="true" />
@@ -362,17 +362,7 @@
                 <div class="col-sm-1">
                 
                 </div>
-                <div class=" col-sm-7 check">
-                 <div class="checkbox">
-                    <label>
-                        <input type="checkbox"  class="form-control" name="reservation"   value="true" /> 
-                        <span class="checkbox-material" >
-                           <span class="check" />
-                        </span>
-                         Special Reservation (Eg. SC / ST / PHC)
-                    </label>
-                </div>
-                </div>
+               
                 <div style="clear:both"></div>
             </div>
        

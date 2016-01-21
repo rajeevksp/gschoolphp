@@ -11,7 +11,6 @@
 	$post['as_values_location'] = trim($post['as_values_userLocation'],' ,'); 
  }
  
-
  ?>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->

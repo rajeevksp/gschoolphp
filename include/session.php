@@ -790,6 +790,7 @@ function resize($source_image, $destination, $tn_w, $tn_h, $quality = 100, $wmso
 <script src="<?php echo JS_PATH;?>bootstrap.min.js"></script> 
 <script src="<?php echo JS_PATH;?>less-2.5.1-min.js"></script> 
 <script src="<?php echo JS_PATH;?>bootstrap-select.min.js"></script>
+<script src="<?php echo JS_PATH;?>ajaxfunction.js"></script>
 
 <!-- Widget - Animated Progress Bar Scripts --> 
 <script src="<?php echo JS_PATH;?>waypoints.min.js"></script> 
@@ -811,7 +812,8 @@ function resize($source_image, $destination, $tn_w, $tn_h, $quality = 100, $wmso
 <script src="<?php echo CSS_PATH;?>material/js/ripples.min.js"></script> 
 <script src="<?php echo JS_PATH;?>animate.js"></script>  
 
-<script src="https://maps.googleapis.com/maps/api/js?"></script>
+ <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0wzIkFk79DCKaqn5-sjNgjsngtHQSeRM&signed_in=true"
+    ></script>
 
     <?php
  }
@@ -1001,40 +1003,22 @@ function commonHeader(){
             <div class="navbar-header">
                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
                <a class="navbar-brand txt_uc" href="<?php echo SECURE_PATH;?>">
-               <img src="images/logo.png" alt="Gool School" />
+               <img src="<?php echo SECURE_PATH;?>assets/images/logo.png" alt="Gool School" />
                </a></div>
             
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                <ul class="nav navbar-nav navbar-right">
-                  <li class="dropdown active"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Home</a>
+                  <li class="dropdown "><a href="#" class="dropdown-toggle" data-toggle="dropdown">Login</a>
                      
                   </li>
-                  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Pages</a>
+                  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Signup</a>
                      
                   </li>
-                  <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Blog</a>
-                     
-                  </li>
-                  <li class="dropdown"><a href="practice_areas.html" class="dropdown-toggle" data-toggle="dropdown" role="button">Portfolio</a>
-                     <ul class="dropdown-menu">
-                        <li><a href="portfolio_col_2.html">Portfolio col 2</a></li>
-                        <li><a href="portfolio_col_3.html">Portfolio col 3</a></li>
-                        <li><a href="portfolio_col_4.html">Portfolio col 4</a></li>
-                        <li><a href="portfolio_col_5.html">Portfolio col 5</a></li>
-                        <li><a href="portfolio_full_width.html">Portfolio full width</a></li>
-                        <li><a href="portfolio_single_col.html">Portfolio Single Col</a></li>
-                     </ul>
-                  </li>
-                  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Contact</a>
-                     <ul class="dropdown-menu dropdown-nested">
-                        <li><a href="contact_layout_1.html">Contact Layout 1</a></li>
-                        <li><a href="contact_layout_2.html">Contact Layout 2</a></li>
-                     </ul>
-                  </li>
-                  <li class="dropdown "><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">shortcodes</a>
-                     
-                  </li>
+                  
+                  
+                  
+                  
                </ul>
             </div>
          </div>
@@ -1043,7 +1027,364 @@ function commonHeader(){
     <?php
 }
 
+//quickfacts
+  function get_qfacts($school_code)
+  {
+	     global $database;
 
+	   $_REQUEST['school_code']=$school_code;
+			 //// Main Table ///
+			 $query = $database->query("SELECT * FROM `school_search_info` where school_code='".$_REQUEST['school_code']."'");  
+			 $data = mysqli_fetch_array($query);
+			 
+			 
+			 			 $_SERVER['QUERY_STRING'] = 'entity_type='.$data['entity_type'].'&as_values_location='.$data['location'];
+
+			 
+			 if($data['entity_type']==0)
+			 {
+				 $query1 = $database->query("SELECT * FROM `school_main_info` where school_code='".$_REQUEST['school_code']."'");  
+			 $data1 = mysqli_fetch_array($query1);
+			 
+			 if($data1['cce']!=0)
+			 {
+				 $cce=1;
+			 }
+			 else
+			 {
+				 				 $cce=0;
+
+		     }
+			 
+			 if($data1['smc_present']==1)
+			 {
+				 $smc_sum=$data1['smc_parent_m']+$data1['smc_parent_f'];
+				 $smc='y';
+			 }
+			 else
+			 {
+				 				 $smc='n';
+
+		     }
+			 
+			 
+			 $queryfty = $database->query("SELECT * FROM `school_facilities_info` where school_code='".$_REQUEST['school_code']."'");  
+			 $datafty = mysqli_fetch_array($queryfty);
+			 if($datafty['playground_present']!=0)
+			 {
+				 $play=2;
+			 }
+			 else
+			 {
+     			 $play=0;
+ 
+			 }
+			 
+			 if($datafty['no_of_computers']!=0)
+			 {
+				 $comp=1;
+			 }
+			 else
+			 {
+     			 $comp=0;
+ 
+			 }
+			
+						 if($datafty['physics_lab']!=0)
+			 {
+				 $phy=1;
+			 }
+			 else
+			 {
+     			 $phy=0;
+ 
+			 }
+			 			 if($datafty['chemistry_lab']!=0)
+			 {
+				 $che=1;
+			 }
+			 else
+			 {
+     			 $che=0;
+ 
+			 }
+			    if(($data1['teacher_student_ratio'])<= 25) { $pt=5; }
+						   else if(($data1['teacher_student_ratio'])> 25 && ($data1['teacher_student_ratio'])< 35) { $pt=3; }
+						   else if(($data1['teacher_student_ratio'])> 35) { $pt=2; }
+						  
+			 
+			 
+			 
+			 $sum = $play+$comp+$phy+$che+$pt;
+			 
+			 
+			 }
+			 else
+			 {
+				 $query1 = $database->query("SELECT * FROM `preschool_main_info` where school_code='".$_REQUEST['school_code']."'");  
+			 $data1 = mysqli_fetch_array($query1);
+			 if($data1['cce']!=0)
+			 {
+				 $cce=1;
+			 }
+			 else
+			 {
+				 				 $cce=0;
+
+		     }
+			  if($data1['smc_present']==1)
+			 {
+				 $smc_sum=$data1['smc_parent_m']+$data1['smc_parent_f'];
+				 $smc='y';
+			 }
+			 else
+			 {
+				 				 $smc='n';
+
+		     }
+			
+			 
+			 $queryfty = $database->query("SELECT * FROM `preschool_facilities_info` where school_code='".$_REQUEST['school_code']."'");  
+			 $datafty = mysqli_fetch_array($queryfty);
+			 if($datafty['playground_present']!=0)
+			 {
+				 $play=2;
+			 }
+			 else
+			 {
+     			 $play=0;
+ 
+			 }
+			 
+			 if($datafty['no_of_computers']!=0)
+			 {
+				 $comp=1;
+			 }
+			 else
+			 {
+     			 $comp=0;
+ 
+			 }
+			
+						 if($datafty['physics_lab']!=0)
+			 {
+				 $phy=1;
+			 }
+			 else
+			 {
+     			 $phy=0;
+ 
+			 }
+			 			 if($datafty['chemistry_lab']!=0)
+			 {
+				 $che=1;
+			 }
+			 else
+			 {
+     			 $che=0;
+ 
+			 }
+			    if(($data1['teacher_student_ratio'])<= 25) { $pt=5; }
+						   else if(($data1['teacher_student_ratio'])> 25 && ($data1['teacher_student_ratio'])< 35) { $pt=3; }
+						   else if(($data1['teacher_student_ratio'])> 35) { $pt=2; }
+						  
+			 
+			 
+			 
+			 $sum = $play+$comp+$phy+$che+$pt;
+			 
+			 }
+			 $type=$data['entity_type'];
+			 /////////
+			 
+			 
+			 
+			 
+			 
+			 ///// user reviews///
+			 
+			 $queryreview = $database->query("SELECT * FROM `user_reviews` where school_code='".$_REQUEST['school_code']."'");  
+			 $rows=mysqli_num_rows($queryreview);
+			 //// reviews end
+			 
+			 //// Medium ////
+			 $medium='';
+			 if($data1['instruction_medium_1']>0)
+			 {
+				 if(strlen($medium)>0)
+				 {
+					 $medium.=",";
+				 }
+			 $query21 = $database->query("SELECT * FROM `instruction_medium` where code='".$data1['instruction_medium_1']."'");  
+			 $data21 = mysqli_fetch_array($query21);
+			 $medium.=$data21['language'];
+			 }
+			 if($data1['instruction_medium_2']>0)
+			 {
+				 if(strlen($medium)>0)
+				 {
+					 $medium.=",";
+				 }
+			 $query21 = $database->query("SELECT * FROM `instruction_medium` where code='".$data1['instruction_medium_2']."'");  
+			 $data21 = mysqli_fetch_array($query21);
+			 $medium.=$data21['language'];
+			 }
+if($data1['instruction_medium_3']>0)
+			 {
+				 if(strlen($medium)>0)
+				 {
+					 $medium.=",";
+				 }
+			 $query21 = $database->query("SELECT * FROM `instruction_medium` where code='".$data1['instruction_medium_3']."'");  
+			 $data21 = mysqli_fetch_array($query21);
+			 $medium.=$data21['language'];
+			 }
+if($data1['instruction_medium_4']>0)
+			 {
+				 if(strlen($medium)>0)
+				 {
+					 $medium.=",";
+				 }
+			 $query21 = $database->query("SELECT * FROM `instruction_medium` where code='".$data1['instruction_medium_4']."'");  
+			 $data21 = mysqli_fetch_array($query21);
+			 $medium.=$data21['language'];
+			 }
+			 if(strlen($medium)>0)
+				 {
+					 $medium = $medium;
+				 }
+///////////////// Medium End //////////
+
+//// Management ////
+$query3 = $database->query("SELECT * FROM `school_management_master` where id='".$data1['school_management']."'");  
+			 $data3 = mysqli_fetch_array($query3);
+			 $management=$data3['management'];
+      ?>
+       <?php  if($data['entity_type']==0)
+			 {
+                         ?> 
+                       <li >
+                             Total Enrolled Students: <?php echo $data1['student_count_preprimary']+$data1['student_count_boys']+$data1['student_count_girls'];?> 
+                           </li>
+                           <li >
+                           <?php if(($data1['teacher_student_ratio'])<= 25) { $s="good"; }
+						   else if(($data1['teacher_student_ratio'])> 25 && ($data1['teacher_student_ratio'])< 35) { $s="Moderate"; }
+						   else if(($data1['teacher_student_ratio'])> 35) { $s="Less"; }
+						    ?>
+                              Individual attention on students is <?php echo $s; ?> as PTR Stands at <?php echo $data1['teacher_student_ratio'];?>:1 ratio.
+                           </li>
+                           <li >
+                           <?php
+                           if($sum >=8)
+						   {
+							   $text="Holistic development";
+						   }
+						   else
+						   {
+					           $text="Academic Focus";
+
+						   }
+						   ?>
+                              This institution concentrates on  <?php echo $text;?>  of students. 
+                           </li>
+                           <?php
+						   if($cce!=0)
+						   {
+							   ?>
+                               <li >
+                              School follows  Continuous and Comprehensive Evaluation (CCE)  for student assessment.  
+                           </li>
+
+                               <?php
+						   }
+						   ?>
+                                                     <?php
+													 if($smc=='y')
+													 {
+														 ?>
+                                                          <li >
+                              This school maintains a good number of parents in School Management Committee meetings to take decisions.
+                           </li>
+                                                         <?php
+													 }
+													 else
+													 {
+														 ?>
+                                                          <li >
+                              This school is maintained by a trust or society.                           </li>
+                                                         <?php
+													 }
+													 ?>
+                                                     
+                           <li >
+                           <?php if($data['num_inst_chain']<=1){ ?> This school operates  with multiple branches  and offers <?php echo $this->getMediums($_REQUEST['school_code']);?> Curriculum. <?php } else { ?>  This school operates  independently and offers <?php echo $this->getMediums($_REQUEST['school_code']);?> Curriculum. <?php } ?>
+                             
+                           </li>
+                         
+ <?php } ?>
+ 
+ <?php  if($data['entity_type']==1)
+			 {
+                         ?> 
+                       <li >
+                             Total Enrolled Students: <?php echo $data1['student_count_preprimary']+$data1['student_count_boys']+$data1['student_count_girls'];?> 
+                           </li>
+                           <li >
+                           <?php if(($data1['teacher_student_ratio'])<= 25) { $s="good"; }
+						   else if(($data1['teacher_student_ratio'])> 25 && ($data1['teacher_student_ratio'])< 35) { $s="Moderate"; }
+						   else if(($data1['teacher_student_ratio'])> 35) { $s="Less"; }
+						    ?>
+                              Individual attention on students is <?php echo $s; ?> as PTR Stands at <?php echo $data1['teacher_student_ratio'];?>:1 ratio.
+                           </li><li >
+                           <?php
+                           if($sum >=8)
+						   {
+							   $text="Holistic development";
+						   }
+						   else
+						   {
+					           $text="Academic Focus";
+
+						   }
+						   ?>
+                              This institution concentrates on  <?php echo $text;?>  of students. 
+                           </li>
+                           <?php
+						   if($cce!=0)
+						   {
+							   ?>
+                               <li >
+                              School follows  Continuous and Comprehensive Evaluation (CCE)  for student assessment.  
+                           </li>
+
+                               <?php
+						   }
+						   ?>
+                                                     <?php
+													 if($smc=='y')
+													 {
+														 ?>
+                                                          <li >
+                              This school maintains a good number of parents in School Management Committee meetings to take decisions.
+                           </li>
+                                                         <?php
+													 }
+													 else
+													 {
+														 ?>
+                                                          <li >
+                              This school is maintained by a trust or society.                           </li>
+                                                         <?php
+													 }
+													 ?>
+                                                     
+                           <li >
+                              This school operates  with multiple branches  and offers <?php echo $this->getMediums($_REQUEST['school_code']);?> Curriculum. 
+                           </li>
+ <?php } ?>
+ 
+      <?php
+  }
 function get_school_gallery($school_code){
 	
 	$path = "../photos/images/".$school_code."/gallery/";
@@ -1110,7 +1451,7 @@ function get_school_panaroma($school_code){
 }
 function get_school_logo($school_code){
 	
-	$path =  "../photos/images/".$school_code."/logo/";
+	$path =  "../photos/images/".$school_code."/logo-default/";
 	
 	if(is_dir($path)){
 	$files=scandir($path);
@@ -1119,7 +1460,9 @@ function get_school_logo($school_code){
 					
 					if(strlen($val) >3  && $val != '.DS_Store'&& $val != 'Thumbs.db')
 					{
+						$name = explode('.',$val);
 						
+					   if($name[0] == 'logo')
 						return $path.$val;
 						
 						
@@ -1127,7 +1470,27 @@ function get_school_logo($school_code){
 		}
 	}
 }
+function get_school_bcg($school_code){
+	
+	$path =  "../photos/images/".$school_code."/logo-default/";
+	
+	if(is_dir($path)){
+	$files=scandir($path);
 
+		foreach ($files as $key =>$val){
+					
+					if(strlen($val) >3  && $val != '.DS_Store'&& $val != 'Thumbs.db')
+					{
+						$name = explode('.',$val);
+						
+					   if($name[0] == 'default')
+						return $path.$val;
+						
+						
+					}
+		}
+	}
+}
 
 function getBoards($school_code){
  

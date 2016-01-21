@@ -7,6 +7,10 @@ header('location: '.$session->referrer);
 else if(isset($_REQUEST['sc']))
 $_REQUEST['school_code'] = $_REQUEST['sc'];
 
+
+
+
+$address = '';
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
@@ -308,11 +312,14 @@ $query3 = $database->query("SELECT * FROM `school_management_master` where id='"
                             </h2>
                             </div>
                             <div class="col-sm-2 col-xs-12 enquire bs-component">
-                             <a class="btn btn-warning btn-raised " onClick="modal()"><i class="fa fa-question-circle"></i> Send Enquiry</a>
+                             <a class="btn btn-warning btn-raised " onClick="$('#myModalview').modal('show');"><i class="fa fa-question-circle"></i> Send Enquiry</a>
                            </div>
                            <div style="clear:both"></div>
                         </div>
-                        <div class="panel-body schoolBcg" style="background:rgba(0, 0, 0, 0) url('../photos/pencil-sharpener-838605_1920.jpg') no-repeat scroll center center">
+                        <?php $img = $session->get_school_bcg($_REQUEST['school_code']);
+						
+						if(strlen($img) > 0){  $img = $img;}else{ $img = SECURE_PATH.'photos/school_bcg.jpg';}?>
+                        <div class="panel-body schoolBcg" style="background:rgba(0, 0, 0, 0) url('<?php echo $img;?>') no-repeat scroll center center">
                                
                                       <div class="schoolProfileHead">
                                       <div class="schoolProfileHeadTxt">
@@ -435,7 +442,7 @@ $query3 = $database->query("SELECT * FROM `school_management_master` where id='"
               
                <li><a class="page_scroll" href="#rev-form"><i class="fa fa-chevron-right"></i> User Reviews</a></li>
                
-               <li><a class="page_scroll" onClick="modal()"><i class="fa fa-chevron-right"></i> Enquire</a></li>
+               <li><a class="page_scroll" onClick="$('#myModalview').modal('show');"><i class="fa fa-chevron-right"></i> Enquire</a></li>
                
             </ul>
             
@@ -467,146 +474,40 @@ $query3 = $database->query("SELECT * FROM `school_management_master` where id='"
                          </ul>
                          <div class="tab-content style_2">
                         <div id="tab_content_1" class="tab-pane fade in active">
-                          <?php  if($data['entity_type']==0)
-			 {
-                         ?> 
-                         <ul class="quickFacts" >
-                       <li >
-                             Total Enrolled Students: <?php echo $data1['student_count_preprimary']+$data1['student_count_boys']+$data1['student_count_girls'];?> 
-                           </li>
-                           <li >
-                           <?php if(($data1['teacher_student_ratio'])<= 25) { $s="good"; }
-						   else if(($data1['teacher_student_ratio'])> 25 && ($data1['teacher_student_ratio'])< 35) { $s="Moderate"; }
-						   else if(($data1['teacher_student_ratio'])> 35) { $s="Less"; }
-						    ?>
-                              Individual attention on students is <?php echo $s; ?> as PTR Stands at <?php echo $data1['teacher_student_ratio'];?>:1 ratio.
-                           </li>
-                           <li >
-                           <?php
-                           if($sum >=8)
-						   {
-							   $text="Holistic development";
-						   }
-						   else
-						   {
-					           $text="Academic Focus";
+                                                 <ul class="quickFacts" >
 
-						   }
-						   ?>
-                              This institution concentrates on  <?php echo $text;?>  of students. 
-                           </li>
-                           <?php
-						   if($cce!=0)
-						   {
-							   ?>
-                               <li >
-                              School follows  Continuous and Comprehensive Evaluation (CCE)  for student assessment.  
-                           </li>
-
-                               <?php
-						   }
-						   ?>
-                                                     <?php
-													 if($smc=='y')
-													 {
-														 ?>
-                                                          <li >
-                              This school maintains a good number of parents in School Management Committee meetings to take decisions.
-                           </li>
-                                                         <?php
-													 }
-													 else
-													 {
-														 ?>
-                                                          <li >
-                              This school is maintained by a trust or society.                           </li>
-                                                         <?php
-													 }
-													 ?>
-                                                     
-                           <li >
-                              This school operates  with multiple branches  and offers <?php echo $session->getMediums($_REQUEST['school_code']);?> Curriculum. 
-                           </li>
-                         </ul>
- <?php } ?>
- 
- <?php  if($data['entity_type']==1)
-			 {
-                         ?> 
-                         <ul class="quickFacts" >
-                       <li >
-                             Total Enrolled Students: <?php echo $data1['student_count_preprimary']+$data1['student_count_boys']+$data1['student_count_girls'];?> 
-                           </li>
-                           <li >
-                           <?php if(($data1['teacher_student_ratio'])<= 25) { $s="good"; }
-						   else if(($data1['teacher_student_ratio'])> 25 && ($data1['teacher_student_ratio'])< 35) { $s="Moderate"; }
-						   else if(($data1['teacher_student_ratio'])> 35) { $s="Less"; }
-						    ?>
-                              Individual attention on students is <?php echo $s; ?> as PTR Stands at <?php echo $data1['teacher_student_ratio'];?>:1 ratio.
-                           </li><li >
-                           <?php
-                           if($sum >=8)
-						   {
-							   $text="Holistic development";
-						   }
-						   else
-						   {
-					           $text="Academic Focus";
-
-						   }
-						   ?>
-                              This institution concentrates on  <?php echo $text;?>  of students. 
-                           </li>
-                           <?php
-						   if($cce!=0)
-						   {
-							   ?>
-                               <li >
-                              School follows  Continuous and Comprehensive Evaluation (CCE)  for student assessment.  
-                           </li>
-
-                               <?php
-						   }
-						   ?>
-                                                     <?php
-													 if($smc=='y')
-													 {
-														 ?>
-                                                          <li >
-                              This school maintains a good number of parents in School Management Committee meetings to take decisions.
-                           </li>
-                                                         <?php
-													 }
-													 else
-													 {
-														 ?>
-                                                          <li >
-                              This school is maintained by a trust or society.                           </li>
-                                                         <?php
-													 }
-													 ?>
-                                                     
-                           <li >
-                              This school operates  with multiple branches  and offers <?php echo $session->getMediums($_REQUEST['school_code']);?> Curriculum. 
-                           </li>
-                         </ul>
- <?php } ?>
- 
- 
+<?php echo $session->get_qfacts($_REQUEST['school_code']);?> </ul>
                         </div>
                         <div id="tab_content_2" class="tab-pane fade ">
+                        <?php
+                        if(strlen($data1['achievements_acadamics'])>0)
+						{
+							echo $data1['achievements_acadamics'];
+                           ?><p>
+<?php echo $data1['school_introduction']; 
                         
-                        <p><?php echo $data['school_name'];?> was established in <?php echo $data1['establishment_year'];?> and it is managed by the <?php echo $management;?>. The school consists of Grades from <?php echo $data['lowest_class'];?> to <?php echo $data['highest_class'];?> . The school is co-educational and <?php echo $session->getMediums($_REQUEST['school_code']);?> is the medium of instructions in this school. The school academic session starts in <?php echo $data1['admissions_month'];?>. This school follows the <?php echo $data1['recognized_by'];?> board. 
+  ?></p><?php  } else { ?>
+<p><?php echo $data['school_name'];?> was established in <?php echo $data1['establishment_year'];?> and it is managed by the <?php echo $management;?>. The school consists of Grades from <?php echo $data['lowest_class'];?> to <?php echo $data['highest_class'];?> . The school is co-educational and <?php echo $session->getMediums($_REQUEST['school_code']);?> is the medium of instructions in this school. The school academic session starts in <?php echo $data1['admissions_month'];?>. This school follows the <?php echo $data1['recognized_by'];?> board. 
 The School is located in <?php echo $data1['location'];?> block of <?php echo $data1['city'];?> in the state of <?php echo $data1['state'];?> and is approachable by all weather road
 
 </p>
+<p><?php echo $data1['school_introduction']; ?></p>
+<?php  } ?>
                            
                            
                         
                         </div>
                         <div id="tab_content_3" class="tab-pane fade">
-                           <p>Admission Details: <?php if($data1['admissions_month']==date('M')) { ?>Active Now</p>
-                           <p>Admissions starts from <?php echo $data1['admissions_start_date'];?> to <?php echo $data1['admissions_end_date'];?>.</p><?php } ?> 
+                         <?php
+						   $date = $data1['admissions_start_date'];
+						   						   $date1 = $data1['admissions_end_date'];
+
+$t= strtotime($date);
+	$t1= strtotime($date1);
+					   
+						   
+						    if(time()>$t && time()< $t1) { ?>  <p>Admission Details: Admissions are in progress </p> <?php } else { if(($data1['admissions_start_date'])>0) {?>
+                           <p>Admissions starts from <?php echo $data1['admissions_start_date'];?> to <?php echo $data1['admissions_end_date'];?>.</p><?php }} ?> 
                         </div>
                      </div>
                           </div>
@@ -671,7 +572,12 @@ The School is located in <?php echo $data1['location'];?> block of <?php echo $d
                            </a></li>
                          </ul>
                          <div class="tab-content style_2">
-                         <?php if($type==0)
+                         <?php
+						 
+						 $transportation = 0;
+						 $transport_routes = '';
+						 
+						  if($type==0)
 						 {
 							 $queryfacility = $database->query("SELECT * FROM `school_facilities_info` where school_code='".$_REQUEST['school_code']."'");  
 			 $datafacility = mysqli_fetch_array($queryfacility);
@@ -741,6 +647,8 @@ The School is located in <?php echo $data1['location'];?> block of <?php echo $d
                                <?php
 								if($datafacility['transport_provided']!=0)
 								{
+									$transportation = 1;
+									$transport_routes = $datafacility['transport_routes'];
 									?>
                                   <div class="col-sm-3" data-toggle="tooltip" title="Transportation Provided">
                                  <h3><i class="fa fa-bus text-success" ></i> Transportation</h3>
@@ -1012,6 +920,8 @@ The School is located in <?php echo $data1['location'];?> block of <?php echo $d
                                  <?php
 								if($datafacility['transport_provided']!=0)
 								{
+									$transportation = 1;
+									$transport_routes = $datafacility['transport_routes'];
 									?>
                                   <div class="col-sm-3" data-toggle="tooltip" title="Transportation Provided">
                                  <h3><i class="fa fa-bus text-success" ></i> Transportation</h3>
@@ -1130,13 +1040,21 @@ The School is located in <?php echo $data1['location'];?> block of <?php echo $d
                             
                         </div><?php } ?>
                         <div id="tab2_content_2" class="tab-pane fade">
-                            <p>  </p>
-                            
-                            <br />
-                             <iframe width="100%" height="240px" frameborder="0" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed?pb=!1m27!1m12!1m3!1d30442.36782489268!2d78.34626576241303!3d17.49337906395455!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m12!3e3!4m5!1s0x3bcb91f25cde1747%3A0xea5a485059490c80!2sJNTU+Bus+Stop%2C+National+Highway+9%2C+Kukatpally+Housing+Board+Colony%2C+Hyderabad%2C+Telangana!3m2!1d17.496402!2d78.3941299!4m4!1s0x0%3A0x111e4f6915a2f1b!3m2!1d17.4874228!2d78.3324444!5e0!3m2!1sen!2sin!4v1448429844134"></iframe>
+                           
+                           
+                           <div id="mapPointers">
+                          
+							 </div>
+						    
+                           
+                           
+                           
                         </div>
                         <div id="tab2_content_3" class="tab-pane fade">
-                          <iframe width="100%" height="240px" frameborder="0" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1902.7102906381656!2d78.33135005799856!3d17.48742535525154!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb92f35d7ce941%3A0x111e4f6915a2f1b!2sMnr+High+School!5e0!3m2!1sen!2sin!4v1448360742773"></iframe>
+                          
+                          <small><a href="https://maps.google.com/maps?q=<?php echo ucwords($data['school_name']);?>,<?php echo ucwords($data1['location']);?>,<?php echo ucwords($data1['city']);?>,</span><?php echo ucwords($data1['district']);?>%20<?php echo $data1['pincode'];?>&t=m&hl=en&ie=UTF8&ll=<?php echo $data1['latitude'];?>,<?php echo $data1['longitude'];?>&spn=0.023859,0.036564&z=12&iwloc=Asource=embed" style="color:#0000FF;text-align:left" target="_blank">View Larger Map</a></small><br />
+   <iframe width="100%" height="240px" frameborder="0" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?q=<?php echo ucwords($data['school_name']);?>,<?php echo ucwords($data1['location']);?>,<?php echo ucwords($data1['city']);?>,</span><?php echo ucwords($data1['district']);?>%20<?php echo $data1['pincode'];?>+&t=m&hl=en&ie=UTF8&ll=<?php echo $data1['latitude'];?>,<?php echo $data1['longitude'];?>&amp;t=m&amp;hl=en&amp;ie=UTF8&amp;source=embed&amp;z=12&amp;output=embed&amp;title=<?php echo $data['school_name'];?>"></iframe>
+                          
                         </div>
                      </div>
                           </div>
@@ -1171,7 +1089,10 @@ The School is located in <?php echo $data1['location'];?> block of <?php echo $d
                              <section class="gallery">
       <div class="container-fluid">
       <?php
-            		foreach ($session->get_school_gallery($_REQUEST['school_code']) as $key =>$val){
+	  $gal = $session->get_school_gallery($_REQUEST['school_code']);
+	  
+	  if(count($gal) > 0){
+            		foreach ($gal as $key =>$val){
 ?>
 
 <div class="col-md-3 col-sm-4 col-xs-12 gallery_item">
@@ -1182,7 +1103,9 @@ The School is located in <?php echo $data1['location'];?> block of <?php echo $d
             </div>
          </div>
           
-                    <?php } ?>
+                    <?php } 
+					
+					}?>
 
       </div>
    </section>
@@ -1348,7 +1271,7 @@ The School is located in <?php echo $data1['location'];?> block of <?php echo $d
                         <div class="panel-body">
                                
                                <div class="col-sm-4">
-                                          <img src="<?php echo $session->get_school_logo($datafeatured['school_code']);?>" alt="" />
+                                          <img src="<?php echo $session->get_school_logo($datafeatured['school_code']);?>" alt="No Logo" title="<?php echo $datafeatured['school_name'];?>" />
                                  </div>
                                  <div class="col-sm-8">
                                      <div class="row schoolProfileRating">
@@ -1433,7 +1356,7 @@ The School is located in <?php echo $data1['location'];?> block of <?php echo $d
                         <div class="panel-body">
                                
                                <div class="col-sm-4">
-                                          <img src="<?php echo $session->get_school_logo($datasimilar['school_code']);?>" alt="" />
+                                          <img src="<?php echo $session->get_school_logo($datasimilar['school_code']);?>" alt="No Logo" title="<?php echo $datasimilar['school_name'];?>"  />
                                  </div>
                                  <div class="col-sm-8">
                                      <div class="row schoolProfileRating">
@@ -1496,7 +1419,7 @@ $school_nameerr='';
 $school_code=$_REQUEST['school_code'];
 $reviewerr='';
 
-	  
+	   $success = 0;  
 
 if(isset($_POST['submit']))
 		  {
@@ -1576,20 +1499,12 @@ $phoneerr="*Mobile number below 10 digits ";
 		$reviewerr="*Please enter your review ";
 		$count++;
 	   }
-	   
+	
 if($count==0)
 {
 $query = $database->query("insert into user_reviews values(NULL,'".$name."','".$school_code."','".$fee."','".$review."',0,'".$phone."','".$email."','".$school_name."','".$exp."','".$aca."','".$fee_cost."','".$infra."','".$money."','".time()."')");
-?>
-<script type="text/javascript">
-	$('#myModal2').modal('show');
-   $("#name").val('');
-   $("email").val('');
-   $("phone").val('');
-   $("review").val('');
 
-	</script>
-<?php
+$success = 1;
 }
 
 		  }
@@ -1852,21 +1767,125 @@ $query = $database->query("insert into user_reviews values(NULL,'".$name."','".$
 <?php  $session->commonFooter();?>
 
 </section>
+ <?php $session->commonJS();
+
+?>
+<script type="text/javascript">
+ 						     
+							   
+							   var geocoder;
+  var map;
+  var directionsService = new google.maps.DirectionsService;
+  var directionsDisplay = new google.maps.DirectionsRenderer;
  
-<!--go-top link--> 
-<a href="#" class="go-top"><i class="fa fa-angle-up"></i></a> 
- 
- 
-<?php $session->commonJS();?> 
-  <?php
   
+ // initialize();
+  
+  function initialize() {
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(17.3700, 78.4800);
+    var mapOptions = {
+      zoom: 14,
+      center: latlng,
+       mapTypeId : google.maps.MapTypeId.ROADMAP
+    }
+    map = new google.maps.Map(document.getElementById("mapPointers"), mapOptions);
+     directionsDisplay.setMap(map);
+
+    //initMap();
+}
+
+ function initMap(){
+     
+ var addr = '<?php echo $data['location'];?>';
+  // addr_list = addr.split(",");
+   
+   var address = addr;
+ 
+    var position;
+ 
+    geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        
+            map.setCenter(results[0].geometry.location);
+       
+            
+            position = results[0].geometry.location;
+       
+      } else {
+        alert("Geocode was not successful for the following reason: " + status);
+      }
+    });
+  
+      var waypts = [];
+	 
+	 <?php
+	    if($transportation > 0){
+			
+		   $rt = explode(',',$transport_routes);	
+			
+		    if(count($rt) > 0){
+				for($i=1;$i < (count($rt)-1);$i++){
+			   	?>
+					 waypts.push({
+	    					location: '<?php echo $rt[$i];?>',
+     						stopover: true
+					 });
+				<?php
+				}
+			}
+			?>
+			  directionsService.route({
+    origin: '<?php echo $rt[0];?>',
+    destination: '<?php echo end($rt);?>',
+    waypoints: waypts,
+    optimizeWaypoints: true,
+    travelMode: google.maps.TravelMode.DRIVING
+  }, function(response, status) {
+    if (status === google.maps.DirectionsStatus.OK) {
+      directionsDisplay.setDirections(response);
+      var route = response.routes[0];
+      var summaryPanel = document.getElementById('directions-panel');
+      summaryPanel.innerHTML = '';
+      // For each route, display summary information.
+      for (var i = 0; i < route.legs.length; i++) {
+        var routeSegment = i + 1;
+        summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+            '</b><br>';
+        summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+        summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+        summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+      }
+    } else {
+      window.alert('Directions request failed due to ' + status);
+    }
+  });
+			<?php
+		}
+	 
+	 
+	 ?>
+     
+	 
+	 
+	 
+    
+ }
+ 
+ 
+ 
+
+	 
+ </script>
+ <script src="<?php echo JS_PATH;?>custom_jquery.js"></script>  
+<?php
   $videos = $session->get_school_videos($_REQUEST['school_code']);
   
   if(count($videos) > 0){
             		foreach ($videos as $key =>$val){
 						
 ?>
-         
+      
  <script type="text/javascript">
 //<![CDATA[
 
@@ -1897,13 +1916,40 @@ $query = $database->query("insert into user_reviews values(NULL,'".$name."','".$
 
 //]]>
 
-function viewmap(){
-	
-}
+
 </script>
                
                     <?php }
   }?>
+<?php
+if($success > 0){
+?> 
+ <script type="text/javascript">
+	 
+                
+
+function viewmap(){
+	
+}
+	</script>  
+<script type="text/javascript">
+	$('#myModal2').modal('show');
+   $("#name").val('');
+   $("email").val('');
+   $("phone").val('');
+   $("review").val('');
+
+	</script>
+    
+    
+  <?php
+ $success =0; 
+}
+  ?>
+<!--go-top link--> 
+<a href="#" class="go-top"><i class="fa fa-angle-up"></i></a> 
+ 
+
 
                            <div class="reviewsDisplay" id="reviews">
                            <?php
@@ -1919,7 +1965,203 @@ function viewmap(){
                            
                         <?php  } ?>   
                         </div> 
-             
-<script src="<?php echo JS_PATH;?>custom_jquery.js"></script>              
+                
+      <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal2" class="modal fade">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title">Thankyou!</h4>
+                      </div>
+                      <div class="modal-body">
+                          Your Review Posted Successfully.
+                      </div>
+                  </div>
+              </div>
+          </div> 
+          
+          <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModalview" class="modal fade">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title"></h4>
+                      </div>
+                      <div class="modal-body" id="returnval">
+<form class="bs-component"   > 
+           
+            
+            
+           <div class="item personalized_search">
+            
+            
+    <fieldset>
+     
+        <div class="form-group full_name" data-content="Please fill your full name" data-trigger="focus" onclick="$(this).popover('hide');">
+           
+            <input class="form-control  floating-label"  value="<?php if(isset($_POST['full_name'])){ echo $_POST['full_name'];}?>" id="full_name" placeholder="Your Full Name" name="full_name"   />
+                
+           
+        </div>
+         
+        <div class="form-group user_email" data-content="Please Enter a valid email id" data-trigger="focus" onclick="$(this).popover('hide');">
+            <input class="form-control floating-label" value="<?php if(isset($_POST['user_email'])){ echo $_POST['user_email'];}?>" name="user_email" id="user_email" placeholder="Email" type="text"   />
+           
+        </div>
+               
+            
+          <div class="form-group  user_mobile" data-content="Please Enter a valid mobile number" data-trigger="focus" onclick="$(this).popover('hide');">
+              <input class="form-control floating-label"  value="<?php if(isset($_POST['user_mobile'])){ echo $_POST['user_mobile'];}?>" name="user_mobile" id="user_mobile"   placeholder="Mobile" type="text"   />
+            
+        </div>
+        
+    
+    
+    
+     <div class="form-group  age" data-content="Please Enter Your Age" data-trigger="focus" onclick="$(this).popover('hide');">
+              <input class="form-control floating-label"  value="<?php if(isset($_POST['age'])){ echo $_POST['age'];}?>" name="age" id="age"   placeholder="Age" type="text"   />
+            
+        </div>
+        
+        
+         <div class="form-group  qualification" data-content="Please Enter Your Qualification" data-trigger="focus" onclick="$(this).popover('hide');">
+              <input class="form-control floating-label"  value="<?php if(isset($_POST['qualification'])){ echo $_POST['qualification'];}?>" name="qualification" id="qualification"   placeholder="Qualification" type="text"   />
+            
+        </div>
+        
+        <div class="form-group  location" data-content="Please Enter Your Location" data-trigger="focus" onclick="$(this).popover('hide');">
+              <input class="form-control floating-label"  value="<?php if(isset($_POST['location'])){ echo $_POST['location'];}?>" name="location" id="location"   placeholder="Location" type="text"   />
+            
+        </div>
+        
+        
+        <div class="col-md-12 col-xs-12">
+
+<div class="form-group">
+            
+
+<select class="selectpicker form-control" name="target_class" id="target_class" data-style="btn-primary">
+<option value="">Class/Standard</option>
+<option value="0"   >Kindergarten</option>
+<option value="1"   >Class 1</option>
+<option value="2"  >Class 2</option>
+<option value="3"  >Class 3</option>
+<option value="4"  >Class 4</option>
+<option value="5" >Class 5</option>
+<option value="6"   >Class 6</option>
+<option value="7"  >Class 7</option>
+<option value="8"  >Class 8</option>
+<option value="9"   >Class 9</option>
+<option value="10" >Class 10</option>
+
+</select>
+        
+   
+</div>
+</div>
+
+     
+        
+           <div class="form-group" >
+           <div style="height:30px;"></div>
+            <label for="inputSalaryF" class=" control-label">Select Salary Range </label>
+           <br />
+            <div class="col-sm-12 col-xs-12">
+          <b class="rangeTxtLow"  >8000</b>
+           
+          <input type="text" id="salary_rangen" name="salary_rangen"  value="<?php if(isset($_POST['salary_rangen'])){ echo $_POST['salary_rangen'];}?>"      data-slider-min="8000" data-slider-max="60000" data-slider-step="2000" data-slider-value="[20000,40000]" data-slider-orientation="horizontal" />
+          
+             <b  class=" rangeTxtHigh"  > &gt; 60000</b> 
+             </div>
+        </div>
+                
+        <br>
+
+  
+  
+        <div class="form-group" style="display:none">
+            <label class=" control-label">Do You have another Child studying in School?</label>
+          
+                <div class="radio radio-primary">
+                    <label>
+                        <input name="cbox"   id="cbox"  value="1" <?php if(isset($_POST['cbox'])){ if($_POST['cbox']==1)echo 'checked="checked"';}?> onClick="fun($(this).val())"  type="radio" />
+                        Yes
+                    </label>
+                
+                    <label>
+                        <input name="cbox"   checked="" id="cbox"  value="0" <?php if(isset($_POST['cbox'])){ if($_POST['cbox']==0)echo 'checked="checked"';}?> onClick="fun($(this).val())" type="radio" />
+                        No
+                    </label>
+                </div>
+                  <input type="hidden" id="radd" value="<?php if(isset($_POST['cbox'])){ echo $_POST['cbox'];}?>" />
+
+                <div style="display:none;" id="sibling_school">
+            
+                    <input class="form-control floating-label" id="sibling_schooln" name="sibling_schooln" placeholder="School Name"  value="<?php if(isset($_POST['sibling_school'])){ echo $_POST['sibling_schooln'];}?>"  type="text" />
+            
+        
+            </div>
+        </div>
+        
+          
+       
+           
+        <div class="form-group">
+              
+                
+                    <label>
+                    <table >
+                <tr>
+                <td>
+                        <input type="checkbox" id="tds" checked="checked"  class="form-control coupon_question"   name="tds" value="1"  <?php if(isset($_POST['tds'])){ echo 'checked="checked"'; } ?> /> 
+                            <input type="hidden" id="tds1" name="tds1" value="<?php if(isset($_POST['tds1'])){ echo $_POST['tds1'];}?>" />
+
+                          <span class="checkbox-material" >
+                           <span class="check" />
+                        </span>
+                        </td><td>
+                          I agree the <a href="#">Terms &amp; Conditions</a> and read the <a href="#">Privacy Policy</a></td></tr></table>
+                    </label>
+                </div>
+                <br />
+                
+         
+        <div class="form-group" style="text-align:center">
+                <a  class="btn btn-primary btn-raised btn-lg" onClick="setState('myModalview','ajax.php','data=1&full_name='+$('#full_name').val()+'&user_email='+$('#user_email').val()+'&user_mobile='+$('#user_mobile').val()+'&salary_rangen='+$('#salary_rangen').val()+'&tds1='+$('#tds1').val()+'&sibling_schooln='+$('#sibling_schooln').val()+'&tds='+$('#tds').val()+'&age='+$('#age').val()+'&qualification='+$('#qualification').val()+'&location='+$('#location').val()+'&target_class='+$('#target_class').val()+'&school_code=<?php echo $_REQUEST['school_code'];?>');" >Submit</a>
+            
+        </div>
+        
+        <div id="errVal" style="display:none;">
+            
+        </div>
+    </fieldset>
+
+               
+               
+           </div>
+    
+      </form>                      </div>
+                  </div>
+              </div>
+          </div>         
+
+
+ 
+<script type="text/javascript">
+
+ 
+	
+		$(".coupon_question").click(function() {
+    if($(this).is(":checked")) {
+			  		  document.getElementById("tds1").value='1';
+
+    } else {
+				  		  document.getElementById("tds1").value='2';
+
+    }
+});
+		
+ </script>
+ 
 </body>
 </html>

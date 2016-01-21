@@ -255,62 +255,7 @@ if($data['entity_type']==0)
                                           <h3>Quick Facts</h3>
                                           
                                         <ul class="quickFacts" >
-                       <li >
-                             Total Enrolled Students: <?php echo $data1['student_count_preprimary']+$data1['student_count_boys']+$data1['student_count_girls'];?> 
-                           </li>
-                           <li >
-                           <?php if(($data1['teacher_student_ratio'])<= 25) { $s="good"; }
-						   else if(($data1['teacher_student_ratio'])> 25 && ($data1['teacher_student_ratio'])< 35) { $s="Moderate"; }
-						   else if(($data1['teacher_student_ratio'])> 35) { $s="Less"; }
-						    ?>
-                              Individual attention on students is <?php echo $s; ?> as PTR Stands at <?php echo $data1['teacher_student_ratio'];?>:1 ratio.
-                           </li>
-                           <li >
-                           <?php
-                           if($sum >=8)
-						   {
-							   $text="Holistic development";
-						   }
-						   else
-						   {
-					           $text="Academic Focus";
-
-						   }
-						   ?>
-                              This institution concentrates on  <?php echo $text;?>  of students. 
-                           </li>
-                           <?php
-						   if($cce!=0)
-						   {
-							   ?>
-                               <li >
-                              School follows  Continuous and Comprehensive Evaluation (CCE)  for student assessment.  
-                           </li>
-
-                               <?php
-						   }
-						   ?>
-                                                     <?php
-													 if($smc=='y')
-													 {
-														 ?>
-                                                          <li >
-                              This school maintains a good number of parents in School Management Committee meetings to take decisions.
-                           </li>
-                                                         <?php
-													 }
-													 else
-													 {
-														 ?>
-                                                          <li >
-                              This school is maintained by a trust or society.                           </li>
-                                                         <?php
-													 }
-													 ?>
-                                                     
-                           <li >
-                              This school operates  with multiple branches  and offers <?php echo $session->getMediums($av[$i]);?> Curriculum. 
-                           </li>
+                       <?php echo $session->get_qfacts($av[$i]);?> 
                          </ul>
                                       </div>
                                       </div>  
@@ -521,7 +466,7 @@ if($datasimilar['entity_type']==0)
             
                       <div class="panel panel-warning"  >
                         <div class="panel-heading">
-                           <a href="../school/index.php?school_code=<?php echo $datasimilar['school_code']; ?>" > <?php echo $data['school_name'];?></a>
+                           <a href="../school/index.php?school_code=<?php echo $datasimilar['school_code']; ?>" > <?php echo $datasimilar['school_name'];?></a>
                              <h5><i class="fa fa-map-marker"></i> <span class="loc"> <?php echo $datasimilar['location'];?></span>,  <?php echo $datasimilar['city'];?></h5>
                             
                             
@@ -553,62 +498,8 @@ if($datasimilar['entity_type']==0)
                                           <h3>Quick Facts</h3>
                                           
                                           <ul class="quickFacts" >
-                       <li >
-                             Total Enrolled Students: <?php echo $data1['student_count_preprimary']+$data1['student_count_boys']+$data1['student_count_girls'];?> 
-                           </li>
-                           <li >
-                           <?php if(($data1['teacher_student_ratio'])<= 25) { $s="good"; }
-						   else if(($data1['teacher_student_ratio'])> 25 && ($data1['teacher_student_ratio'])< 35) { $s="Moderate"; }
-						   else if(($data1['teacher_student_ratio'])> 35) { $s="Less"; }
-						    ?>
-                              Individual attention on students is <?php echo $s; ?> as PTR Stands at <?php echo $data1['teacher_student_ratio'];?>:1 ratio.
-                           </li>
-                           <li >
-                           <?php
-                           if($sum >=8)
-						   {
-							   $text="Holistic development";
-						   }
-						   else
-						   {
-					           $text="Academic Focus";
+                                              <?php echo $session->get_qfacts($data1['school_code']);?> 
 
-						   }
-						   ?>
-                              This institution concentrates on  <?php echo $text;?>  of students. 
-                           </li>
-                           <?php
-						   if($cce!=0)
-						   {
-							   ?>
-                               <li >
-                              School follows  Continuous and Comprehensive Evaluation (CCE)  for student assessment.  
-                           </li>
-
-                               <?php
-						   }
-						   ?>
-                                                     <?php
-													 if($smc=='y')
-													 {
-														 ?>
-                                                          <li >
-                              This school maintains a good number of parents in School Management Committee meetings to take decisions.
-                           </li>
-                                                         <?php
-													 }
-													 else
-													 {
-														 ?>
-                                                          <li >
-                              This school is maintained by a trust or society.                           </li>
-                                                         <?php
-													 }
-													 ?>
-                                                     
-                           <li >
-                              This school operates  with multiple branches  and offers <?php echo $session->getMediums($data['school_code']);?> Curriculum. 
-                           </li>
                          </ul>
                                       </div>
                                       </div>

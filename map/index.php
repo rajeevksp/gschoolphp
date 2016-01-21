@@ -692,8 +692,14 @@
 <a href="#" class="go-top"><i class="fa fa-angle-up"></i></a> 
  
  
-<?php $session->commonJS();
+<?php 
 
+$session->commonJS();
+?>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0wzIkFk79DCKaqn5-sjNgjsngtHQSeRM&signed_in=true"
+    ></script>
+
+<?php
   if($tot_results == 0){
 	?>
      <script type="text/javascript">
@@ -909,6 +915,9 @@ var addr = document.getElementById("prefill").value;
   
 }  
 
+
+
+viewmap();	
  function viewSchool( schoolcode){
      $("#schoolView").show(100);
      

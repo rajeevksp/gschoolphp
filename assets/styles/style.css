@@ -1650,6 +1650,36 @@ Mobile Screen
 .blog_items .btn-default{
 	margin-bottom:10px;
 }
+
+.banner_bg .img-responsive{
+ display:none;	
+}
+section.slider{
+background:url(../../photos/home_bcg.jpg) no-repeat center;	
+display:block;
+}
+.banner{
+	 margin:0px auto; 	
+}
+
+.banner .input-group-btn{
+ display:block;
+  
+    margin-top: 3%;	
+}
+.banner .input-group .input-group-btn .btn{
+	margin:0px auto;
+	
+}
+.banner .input-group{
+	display:block;
+}
+.rangeTxtLow, .rangeTxtHigh{
+ display:none;	
+}
+.basic_search{
+ width:85%;	
+}
 }
 /* ==============================================
 Tablet and Desktop Screen

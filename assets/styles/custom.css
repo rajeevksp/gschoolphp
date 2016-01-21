@@ -265,6 +265,9 @@ font-weight:400;
 .featuresList .ficon{
 	margin:8px;
 }
+.similarSchools h2{
+  color:#666;	
+}
 
 .similarSchools .panel-body img{
 	width:100%;

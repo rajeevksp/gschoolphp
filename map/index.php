@@ -55,12 +55,13 @@
         
           
        
+         
                
            <div id="search_filters"  class="item ">
            
            <br />
                
-               <form class=" bs-component" action="../map" method="get" >
+               <form class=" bs-component" action="../search" method="get" >
     <fieldset>
      
         <div class="form-group">
@@ -76,23 +77,39 @@
            <div class=" col-sm-5 col-md-5 check">
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" class="form-control" name="transportation" <?php if(isset($post['transportation'])){ if($post['transportation'] == 1){ echo 'checked="checked"';}}?>  value="1" />
+                        <input type="checkbox" class="form-control" name="transportation" <?php if(isset($post['transportation'])){ if($post['transportation'] == 'true'){ echo 'checked="checked"';}}?>  value="1" />
                         <span class="checkbox-material">
                            <span class="check"></span>
                         </span>
                         &#160;Transportation
+                    </label>&#160;&#160;
+                    <label>
+                        <input type="checkbox" class="form-control"  name="residential" <?php if(isset($post['residential'])){ if($post['residential'] == 'true'){ echo 'checked="checked"';}}?>  value="1" />
+                        <span class="checkbox-material">
+                           <span class="check"></span>
+                        </span>
+                        &#160;Residential
                     </label>
                 &#160;&#160;
+                    <label>
+                        <input type="checkbox" class="form-control"  <?php if(isset($post['playground'])){ if($post['playground'] == 'true'){ echo 'checked="checked"';}}?> name="playground" value="1" />
+                        <span class="checkbox-material">
+                           <span class="check"></span>
+                        </span>
+                        &#160;Playground
+                    </label>
+                <!--&#160;&#160;
                     <label>
                         <input type="checkbox" class="form-control" name="reservation" <?php if(isset($post['reservation'])){ if($post['reservation'] == 1){ echo 'checked="checked"';}}?> value="1"/>
                         <span class="checkbox-material">
                            <span class="check"></span>
                         </span>
                         &#160;Spl. Reservation (SC/ST/BC)
-                    </label>
+                    </label>-->
                 </div>
                
         </div>
+         
 </div>
   
        <div class="form-group">
@@ -102,7 +119,7 @@
 
 <select class="selectpicker form-control" name="target_class" data-style="btn-primary">
 <option value="">Class/Standard</option>
-<option value="0" <?php if(isset($post['target_class'])){ if($post['target_class'] == 0){ echo 'selected="selected"';}}?> >Kindergarten</option>
+<option value="-1" <?php if(isset($post['target_class'])){ if($post['target_class'] == -1){ echo 'selected="selected"';}}?> >Kindergarten</option>
 <option value="1" <?php if(isset($post['target_class'])){ if($post['target_class'] == 1){ echo 'selected="selected"';}}?> >Class 1</option>
 <option value="2" <?php if(isset($post['target_class'])){ if($post['target_class'] == 2){ echo 'selected="selected"';}}?> >Class 2</option>
 <option value="3" <?php if(isset($post['target_class'])){ if($post['target_class'] == 3){ echo 'selected="selected"';}}?> >Class 3</option>
@@ -121,10 +138,10 @@
                 
                 <select class="selectpicker form-control" name="board" data-style="btn-primary">
 <option value="">School Board</option>
- <option value="CBSE"  <?php if(isset($post['board'])){ if($post['board'] == 'CBSE'){ echo 'selected="selected"';}}?> >CBSE</option>
-<option value="ICSE" <?php if(isset($post['board'])){ if($post['board'] == 'ICSE'){ echo 'selected="selected"';}}?> >ICSE</option>
-<option value="IB" <?php if(isset($post['board'])){ if($post['board'] == 'IB'){ echo 'selected="selected"';}}?> >IB</option>
-<option value="State" <?php if(isset($post['board'])){ if($post['board'] == 'State'){ echo 'selected="selected"';}}?> >State</option>
+ <option value="CBSE"  <?php if(isset($post['board'])){ if($post['board'] == 'cbse'){ echo 'selected="selected"';}}?> >CBSE</option>
+<option value="ICSE" <?php if(isset($post['board'])){ if($post['board'] == 'icse'){ echo 'selected="selected"';}}?> >ICSE</option>
+<option value="IB" <?php if(isset($post['board'])){ if($post['board'] == 'ib'){ echo 'selected="selected"';}}?> >IB</option>
+<option value="State" <?php if(isset($post['board'])){ if($post['board'] == 'state'){ echo 'selected="selected"';}}?> >State</option>
  
 </select>
 
@@ -197,27 +214,7 @@
 </select>
      </div>
         
-        <div class="col-sm-3 check">
         
-          <div class="checkbox">
-                    <label>
-                        <input type="checkbox" class="form-control"  name="residential" <?php if(isset($post['residential'])){ if($post['residential'] == 1){ echo 'checked="checked"';}}?>  value="1" />
-                        <span class="checkbox-material">
-                           <span class="check"></span>
-                        </span>
-                        &#160;Residential
-                    </label>
-                &#160;&#160;
-                    <label>
-                        <input type="checkbox" class="form-control"  <?php if(isset($post['playground'])){ if($post['playground'] == 1){ echo 'checked="checked"';}}?> name="playground" value="1" />
-                        <span class="checkbox-material">
-                           <span class="check"></span>
-                        </span>
-                        &#160;Playground
-                    </label>
-                </div>
-        
-        </div>
         
         <div class="col-sm-4">
         
@@ -239,7 +236,12 @@
                    <div class="col-sm-4">
                    </div>
                    <div class="col-sm-4">
-                       <a  class="btn   btn-default btn-raised btn-xs" onclick="this.form.reset()"><i class="fa fa-refresh"></i> Clear</a>
+                       <a  class="btn   btn-default btn-raised btn-xs" onclick="<?php if(isset($post['as_values_location'])){ 
+						 ?>
+                         window.location = '<?php echo SECURE_PATH.'search/?entity_type='.$post['entity_type'].'&as_values_location='.$post['as_values_location'];?>';
+                         <?php
+						 }
+						 ?>"><i class="fa fa-refresh"></i> Clear</a>
          <a  class="btn  btn-warning btn-raised   btn-xs" id="moreBtn" onclick="$('#moreFilters').slideToggle('slow',function(){ $('#moreBtn i').toggleClass('fa-minus')})"><i class="fa fa-plus"></i> More</a>
         
                    </div>
@@ -275,7 +277,21 @@
          
          <!--<div class="container">
          -->
-             
+             <div class="compareHolder" >
+                        <div class="col-sm-10 col-xs-12">
+                            <div id="compareHolder" class="row">
+
+
+                            </div>
+                        </div>
+                        <div class="col-sm-2 col-xs-12">
+                             
+              <input type="hidden" id="compare_schools" name="compare_schools" value="" />
+               
+              <a onClick="window.location = '../compare/?schools='+$('#compare_schools').val();" class="btn btn-block btn-danger btn-raised"   ><i class="fa fa-expand"></i> Compare</a> 
+                        </div>       
+              
+          </div>
            
              
          
@@ -289,14 +305,14 @@
                          <?php
 						 if(isset($post['as_values_location'])){ 
 						 ?>
-                         <li><a href="<?php SECURE_PATH.'search/map?entity_type=school&as_values_location='.$post['as_values_location'];?>"><?php   echo  ucwords(trim($post['as_values_location'],' ,'));?></a></li>
+                         <li><a href="<?php echo SECURE_PATH.'search/map?entity_type=school&as_values_location='.$post['as_values_location'];?>"><?php   echo  ucwords(trim($post['as_values_location'],' ,'));?></a></li>
                          <?php
 						 }
 						 ?>
                             <?php
 						 if(isset($post['board'])){ 
 						 ?>
-                         <li><a href="<?php SECURE_PATH.'search/map?entity_type=school&as_values_location='.$post['as_values_location'].'&board='.$post['board'];?>"><?php   echo  $post['board'];?></a></li>
+                         <li><a href="<?php echo SECURE_PATH.'search/map?entity_type=school&as_values_location='.$post['as_values_location'].'&board='.$post['board'];?>"><?php   echo  $post['board'];?></a></li>
                          <?php
 						 }
 						 ?>
@@ -390,22 +406,22 @@
                             <p><?php echo $school['ranking'];?></p>
                             </div>-->
                                <div class="latlong" style="display:none">
-                                <input type="hidden" class="lat_str" value="#{school.lat_str}" />  
-                                <input type="hidden" class="long_str" value="#{school.long_str}" />
-                                <input type="hidden" class="school_name" value="#{school.school_name}" />
-                                <input type="hidden" class="map_content" value=" #{school.location},  #{school.city}" />
-                                <input type="hidden" class="sponsored_result" value=" #{school.sponsored_result}" />
-                                 <input type="hidden" class="school_code" value=" #{school.school_code}" />
+                                <input type="hidden" class="lat_str" value="" />  
+                                <input type="hidden" class="long_str" value="" />
+                                <input type="hidden" class="school_name" value="" />
+                                <input type="hidden" class="map_content" value=" " />
+                                <input type="hidden" class="sponsored_result" value="" />
+                                 <input type="hidden" class="school_code" value="" />
                             </div>
                         </div>
                         <div class="panel-body">
                                
                                       <div class="row">
-                                      <div class="col-sm-3 col-xs-3 mschoolProfilePic">
+                                      <div class="col-sm-3 col-xs-12 mschoolProfilePic">
                                           <img src="<?php echo $session->get_school_logo($school['school_code']);?>" alt="No Logo" title="<?php echo ucwords($school['school_name']);?>" />
                                       </div>
                                      
-                                      <div class="col-sm-9 col-xs-9">
+                                      <div class="col-sm-9 col-xs-12">
                                          <div class="row">
                                               Board: <b>
                                                     <?php $session->getBoards($school['school_code']);?>  
@@ -421,6 +437,21 @@
                                          
                                        
                                       </div>
+                                      
+                                      <div class="col-xs-12">
+                            
+                            <div class="schoolCompare col-xs-6" title="Add to Compare" data-toggle="tooltip">
+                            <br /><br />
+                                <a class="" onclick="addToCompare('<?php echo $school['school_code'];?>','<?php echo ucwords($school['school_name']);?>','<?php echo ucwords($school['location']).", ".ucwords($school['city']);?>')"  style="color:#09F">Compare</a>
+                                
+                            </div>
+                            <div class="schoolRating col-xs-6">
+                               
+                                <a class="btn btn-warning btn-block btn-fab btn-raised " href="javascript:void(0)"><i class="fa fa-star"></i></a>
+                            <p  style="color:#09F"><?php echo $school['ranking'];?></p>
+                            </div>
+                              </div>
+                                      
                                       </div>
                                       
                                       
@@ -576,22 +607,22 @@
                             <p><?php echo $school['ranking'];?></p>
                             </div>-->
                                <div class="latlong" style="display:none">
-                                <input type="hidden" class="lat_str" value="#{school.lat_str}" />  
-                                <input type="hidden" class="long_str" value="#{school.long_str}" />
-                                <input type="hidden" class="school_name" value="#{school.school_name}" />
-                                <input type="hidden" class="map_content" value=" #{school.location},  #{school.city}" />
-                                <input type="hidden" class="sponsored_result" value=" #{school.sponsored_result}" />
-                                 <input type="hidden" class="school_code" value=" #{school.school_code}" />
+                                <input type="hidden" class="lat_str" value="" />  
+                                <input type="hidden" class="long_str" value="" />
+                                <input type="hidden" class="school_name" value="" />
+                                <input type="hidden" class="map_content" value="" />
+                                <input type="hidden" class="sponsored_result" value="" />
+                                 <input type="hidden" class="school_code" value="" />
                             </div>
                         </div>
                         <div class="panel-body">
                                
                                       <div class="row">
-                                      <div class="col-sm-3 col-xs-3 mschoolProfilePic">
+                                      <div class="col-sm-3 col-xs-12 mschoolProfilePic">
                                           <img src="<?php echo $session->get_school_logo($school['school_code']);?>" alt="No Logo" title="<?php echo ucwords($school['school_name']);?>" />
                                       </div>
                                      
-                                      <div class="col-sm-9 col-xs-9">
+                                      <div class="col-sm-9 col-xs-12">
                                          <div class="row">
                                              Board: <b>
                                                     <?php $session->getBoards($school['school_code']);?>  
@@ -608,6 +639,20 @@
                                          
                                        
                                       </div>
+                                      
+                                      
+                                      <div class="col-xs-12">
+                            
+                            <div class="schoolCompare col-xs-6" title="Add to Compare" data-toggle="tooltip">
+                               <br /><br /> <a class="" onclick="addToCompare('<?php echo $school['school_code'];?>','<?php echo ucwords($school['school_name']);?>','<?php echo ucwords($school['location']).", ".ucwords($school['city']);?>')" style="color:#09F">Compare</a>
+                                
+                            </div>
+                            <div class="schoolRating col-xs-6">
+                               
+                                <a class="btn btn-warning btn-block btn-fab btn-raised " href="javascript:void(0)"><i class="fa fa-star"></i></a>
+                            <p  style="color:#09F"><?php echo $school['ranking'];?></p>
+                            </div>
+                              </div>
                                       </div>
                                       
                                       

@@ -878,11 +878,11 @@ function commonFooter(){
                <div class="contact_info appear-animation" data-appear-animation="fadeInUpDownSmall">
                   <h3 class="style_2">Contact <strong>Info</strong></h3>
                   <ul>
-                     <li><i class="fa fa-phone"></i>Phone: (888) 123-456-7890</li>
-                     <li><i class="fa fa-map-marker"></i>121 King Street, Melbourne Victoria 3000 Australia </li>
-                     <li><i class="fa fa-envelope"></i><a href="#">you@yourdomain.com</a></li>
+                     <li><i class="fa fa-phone"></i>Phone: (+91) 800-812-3707</li>
+                     <li><i class="fa fa-map-marker"></i> Attapur, Hyderabad </li>
+                     <li><i class="fa fa-envelope"></i><a href="javascript:void(0);">prakash.deadlock@gmail.com</a></li>
                   </ul>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                  <p>Feel free to contact us or drop in a mail for all your queries.</p>
                </div>
             </div>
             <div class="col-md-6">
@@ -930,21 +930,19 @@ function commonFooter(){
          <div class="text-center">
             <h3 class="style_2"><strong>GOOL SCHOOL</strong> - MAKES YOUR SCHOOL SEARCH EASY</h3>
             <!--social icons-->
-            <div class="social_icons"><a href="#"><i class="fa fa-facebook appear-animation" data-appear-animation="fadeInUpDownSmall"></i></a><a href="#"><i class="fa fa-twitter appear-animation delay_2" data-appear-animation="fadeInUpDownSmall"></i></a><a href="#"><i class="fa fa-linkedin appear-animation delay_1" data-appear-animation="fadeInUpDownSmall"></i></a><a class="" href="#"><i class="fa fa-google-plus appear-animation delay_3" data-appear-animation="fadeInUpDownSmall"></i></a> </div>
+            <div class="social_icons"><a href="https://facebook.com/goolschool"><i class="fa fa-facebook appear-animation" data-appear-animation="fadeInUpDownSmall"></i></a><a href="https://twitter.com/goolschool"><i class="fa fa-twitter appear-animation delay_2" data-appear-animation="fadeInUpDownSmall"></i></a><a href="https://linkedin.com/goolschool"><i class="fa fa-linkedin appear-animation delay_1" data-appear-animation="fadeInUpDownSmall"></i></a><a class="" href="https://google.com/plus/+goolschool"><i class="fa fa-google-plus appear-animation delay_3" data-appear-animation="fadeInUpDownSmall"></i></a> </div>
             <hr />
             <ul class="foot_nav style_2">
-               <li><a href="index.html">Home</a></li>
-               <li><a href="about_layout_1.html">About</a></li>
-               <li><a href="services_layout_1.html">Services</a></li>
-               <li><a href="portfolio_full_width.html">Porfolio</a></li>
-               <li><a href="blog_col_1_right_sidebar.html">Blog</a></li>
-               <li><a href="contact_layout_1.html">Contact</a></li>
+               <li><a href="<?php echo SECURE_PATH;?>">Home</a></li>
+               <li><a href="<?php echo SECURE_PATH;?>static/about/">About</a></li>
+                <li><a href="<?php echo SECURE_PATH;?>static/blog/">Blog</a></li>
+               <li><a href="<?php echo SECURE_PATH;?>static/contact/">Contact</a></li>
             </ul>
             <ul class="foot_nav style_2">
-               <li><a href="#">Company</a></li>
-               <li><a href="#">What We Do</a></li>
-               <li><a href="#">Help Center</a></li>
-               <li><a href="#">Terms &amp; Services</a></li>
+               <li><a href="<?php echo SECURE_PATH;?>static/company/">Company</a></li>
+               <li><a href="<?php echo SECURE_PATH;?>static/what_we_do/">What We Do</a></li>
+               <li><a href="<?php echo SECURE_PATH;?>static/help/">Help Center</a></li>
+               <li><a href="<?php echo SECURE_PATH;?>static/terms/">Terms &amp; Services</a></li>
             </ul>
                 <hr />
             <!--Copyright-->
@@ -992,7 +990,7 @@ function commonHeader(){
          <div class="container-fluid">
             <div class="pull-left"><i class="fa fa-envelope"></i><span>you@yourdomain.com</span><i class="fa fa-phone"></i><span>(888) 123-456-7890</span></div>
             <div class="pull-right text-right">
-               <div class="toggle"><span><a class="trigger" href="#">Sign Up</a></span><span><a class="trigger" href="#">Login</a></span></div>
+               <div class="toggle"><span><a class="trigger" href="javascript:void(0);">Sign Up</a></span><span><a class="trigger" href="javascript:void(0);">Login</a></span></div>
             </div>
          </div>
       </div>-->
@@ -1009,10 +1007,10 @@ function commonHeader(){
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                <ul class="nav navbar-nav navbar-right">
-                  <li class="dropdown "><a href="#" class="dropdown-toggle" data-toggle="dropdown">Login</a>
+                  <li class="dropdown "><a href="<?php echo SECURE_PATH;?>static/signup/" class="dropdown-toggle" data-toggle="dropdown">Login</a>
                      
                   </li>
-                  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Signup</a>
+                  <li class="dropdown"><a href="<?php echo SECURE_PATH;?>static/signup/" class="dropdown-toggle" data-toggle="dropdown" role="button">Signup</a>
                      
                   </li>
                   
@@ -1469,6 +1467,9 @@ function get_school_logo($school_code){
 					}
 		}
 	}
+	
+	return $path =  "../photos/images/logo.png";
+	
 }
 function get_school_bcg($school_code){
 	
@@ -1490,6 +1491,8 @@ function get_school_bcg($school_code){
 					}
 		}
 	}
+	
+	return $path =  "../photos/school_bcg.jpg";
 }
 
 function getBoards($school_code){

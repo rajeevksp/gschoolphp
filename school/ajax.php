@@ -1,8 +1,6 @@
 <?php
 include('../include/session.php');
- $session->commonCSS();
-$session->commonHeader();
-
+ 
 if(isset($_POST['data']))
 {	
 	$post = $session->cleanInput($_POST);
@@ -57,7 +55,7 @@ if(count($_SESSION['error']) > 0 ){
            
             
             
-           <div class="item personalized_search">
+           <div class="item personalized_search enquiry_form">
             
             
     <fieldset>
@@ -133,11 +131,11 @@ if(count($_SESSION['error']) > 0 ){
             <label for="inputSalaryF" class=" control-label">Select Salary Range </label>
            <br />
             <div class="col-sm-12 col-xs-12">
-          <b class="rangeTxtLow"  >8000</b>
+          <b class="rangeTxtLow"  >20k</b>
            
-          <input type="text" id="salary_rangen" name="salary_rangen"  value="<?php if(isset($_POST['salary_rangen'])){ echo $_POST['salary_rangen'];}?>"      data-slider-min="8000" data-slider-max="60000" data-slider-step="2000" data-slider-value="[20000,40000]" data-slider-orientation="horizontal" />
+          <input type="text" id="salary_rangen" name="salary_rangen"  value="<?php if(isset($_POST['salary_rangen'])){ echo $_POST['salary_rangen'];}?>"      data-slider-min="20000" data-slider-max="150000" data-slider-step="2000" data-slider-value="[20000,60000]" data-slider-orientation="horizontal" />
           
-             <b  class=" rangeTxtHigh"  > &gt; 60000</b> 
+             <b  class=" rangeTxtHigh"  > &gt; 1.5L</b> 
              </div>
         </div>
                 
@@ -170,7 +168,11 @@ if(count($_SESSION['error']) > 0 ){
         </div>
         
           
-       
+           
+         <div class="form-group  query" >
+              <textarea class="form-control floating-label"  value="<?php if(isset($_POST['query'])){ echo $_POST['query'];}?>" name="query" id="query"   placeholder="Your Query" ></textarea>
+            
+        </div>
            
         <div class="form-group">
               
@@ -193,7 +195,7 @@ if(count($_SESSION['error']) > 0 ){
                 
          
         <div class="form-group" style="text-align:center">
-                <a  class="btn btn-primary btn-raised btn-lg" onClick="setState('myModalview','ajax.php','data=1&full_name='+$('#full_name').val()+'&user_email='+$('#user_email').val()+'&user_mobile='+$('#user_mobile').val()+'&salary_rangen='+$('#salary_rangen').val()+'&tds1='+$('#tds1').val()+'&sibling_schooln='+$('#sibling_schooln').val()+'&tds='+$('#tds').val()+'&age='+$('#age').val()+'&qualification='+$('#qualification').val()+'&location='+$('#location').val()+'&target_class='+$('#target_class').val()+'&school_code=<?php echo $_REQUEST['school_code'];?>');" >Submit</a>
+                <a  class="btn btn-primary btn-raised btn-lg" onClick="setState('myModalview','ajax.php','data=1&full_name='+$('#full_name').val()+'&user_email='+$('#user_email').val()+'&user_mobile='+$('#user_mobile').val()+'&salary_rangen='+$('#salary_rangen').val()+'&tds1='+$('#tds1').val()+'&sibling_schooln='+$('#sibling_schooln').val()+'&tds='+$('#tds').val()+'&age='+$('#age').val()+'&qualification='+$('#qualification').val()+'&query='+$('#query').val()+'&location='+$('#location').val()+'&target_class='+$('#target_class').val()+'&school_code=<?php echo $_REQUEST['school_code'];?>');" >Submit</a>
             
         </div>
         
@@ -207,6 +209,13 @@ if(count($_SESSION['error']) > 0 ){
            </div>
     
       </form>
+      
+      <script type="text/javascript">
+       
+$('#salary_rangen').bootstrapSlider({tooltip:'always',tooltip_position:'top'});
+
+ 
+      </script>
      </div>
                   </div>
               </div>
@@ -405,5 +414,3 @@ $query = $database->query("insert into enquiry_data values(NULL,'".$_REQUEST['fu
 }
 
 ?>
-
-</html>

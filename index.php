@@ -2,14 +2,6 @@
  include('include/session.php');
  
  
- /*if(isset($_REQUEST['as_values_location'])){
-	  $post = $session->cleanInput($_REQUEST);
- 
-	 $search_url = 'gschooldev/search/'.$post['entity_type'].'/'.$post['as_values_location'];
-	 
-	 header('location: '.$search_url);
- }
-*/
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
@@ -55,10 +47,10 @@
             <form class="bs-component" action="search/" method="get">
            
                 
-           <div class="input-group">
+           <div class="row">
                
-               <div class="col-sm-4 col-xs-6">
-                   <div class="radio  radio-primary">
+               <div class="col-sm-2 col-xs-6">
+                   <div class="radioClass ">
   <label>
       <input type="radio"  name="entity_type" checked="checked" onclick="$('#entity').val($(this).val());$('#school_entity').val($(this).val());initAutocomplete();" value="school" />
    School
@@ -66,32 +58,32 @@
 </div>
                   
                </div>    
-               <div class="col-sm-4  col-xs-6">
-                    <div class="radio  radio-primary">
+               <div class="col-sm-3  col-xs-6">
+                    <div class="radioClass">
   <label>
       <input type="radio"   name="entity_type" value="nursery" onclick="$('#entity').val($(this).val());$('#school_entity').val($(this).val());initAutocomplete();"/>
-   Nursery
+   Pre-School
   </label>
 </div>
                       
                </div>
-               <div class="col-sm-4  col-xs-12"></div>
+               <div class="col-sm-8 col-xs-12"></div>
                
     </div>       
-                
+              <div style="clear:both"></div>  
 <div class="input-group">
 
   
      
  
-<div class="form-control-wrapper autosuggest">
+<div class="form-control-wrapper autosuggest" data-content="Please give a valid input" data-placement="left" data-trigger="focus" onclick="$(this).popover('hide');">
 <input id="focusedInput"  class="form-control"   type="text" />
 
 </div>
     <input type="hidden" id="prefill" value="" />    
     
 
-    <span class="input-group-btn"><button type="submit" class="btn btn-info btn-raised" ><i class="fa fa-search"></i> Search</button>
+    <span class="input-group-btn"><button onClick="if($('#as-values-location').val().length <= 3){$('.autosuggest').popover('show'); return false;}" type="submit" class="btn btn-info btn-raised" ><i class="fa fa-search"></i> Search</button>
     
     </span>
 </div>
@@ -183,7 +175,7 @@
 
 <select class="selectpicker form-control" name="target_class" data-style="btn-primary">
 <option value="">Class/Standard</option>
-<option value="0"   >Kindergarten</option>
+<option value="-1"   >Kindergarten</option>
 <option value="1"   >Class 1</option>
 <option value="2"  >Class 2</option>
 <option value="3"  >Class 3</option>
@@ -338,9 +330,9 @@
                     </label>
                 </div>
                 
-                <div style="display:none;" id="sibling_school">
+                <div style="display:none;" id="sibling_school" class="inputSchool">
             
-                    <input class="form-control floating-label" id="inputSchool" name="sibling_school" placeholder="School Name"    type="text" />
+                    <input   id="inputSchool" name="sibling_school"     type="text" />
             
         
             </div>
@@ -388,7 +380,7 @@
                           <span class="checkbox-material" >
                            <span class="check" />
                         </span>
-                          I agree the <a href="#">Terms &amp; Conditions</a> and read the <a href="#">Privacy Policy</a>
+                          I agree the <a href="javascript:void(0);">Terms &amp; Conditions</a> and read the <a href="javascript:void(0);">Privacy Policy</a>
                     </label>
                 </div>
                 <br />
@@ -424,17 +416,44 @@
    <!--counters-->
    <section class="counters">
       <div class="container">
-         <h2>Ultimate <strong>10 Years</strong> Results <i class="fa fa-smile-o"></i></h2>
-         <div class="col-sm-3 appear-animation" data-appear-animation="fadeInUpDown"> <span class="counter">10</span>
+         <h2>Our <strong>Stats</strong> <i class="fa fa-smile-o"></i></h2>
+         <div class="col-sm-3 appear-animation" data-appear-animation="fadeInUpDown"> <span class="counter">
+         <?php
+		   $search_sel  = $database->query("SELECT * FROM user_search");
+		   
+		   echo mysqli_num_rows($search_sel);
+		 ?>
+         
+         
+         </span>
             <h3>Basic Searches</h3>
          </div>
-         <div class="col-sm-3 appear-animation delay_1" data-appear-animation="fadeInUpDown"> <span class="counter">1,234</span>
+         <div class="col-sm-3 appear-animation delay_1" data-appear-animation="fadeInUpDown"> <span class="counter">
+           <?php
+		   $search_sel  = $database->query("SELECT * FROM school_search_info");
+		   
+		   echo mysqli_num_rows($search_sel);
+		 ?>
+         
+         </span>
             <h3>Listed Schools</h3>
          </div>
-         <div class="col-sm-3 appear-animation delay_2" data-appear-animation="fadeInUpDown"> <span class="counter">567</span>
+         <div class="col-sm-3 appear-animation delay_2" data-appear-animation="fadeInUpDown"> <span class="counter">
+         <?php
+		   $search_sel  = $database->query("SELECT DISTINCT(user_ip) FROM user_search");
+		   
+		   echo mysqli_num_rows($search_sel);
+		 ?>
+         </span>
             <h3>Unique Users</h3>
          </div>
-         <div class="col-sm-3 appear-animation delay_3" data-appear-animation="fadeInUpDown"> <span class="counter">89</span>
+         <div class="col-sm-3 appear-animation delay_3" data-appear-animation="fadeInUpDown"> <span class="counter">
+           <?php
+		   $search_sel  = $database->query("SELECT DISTINCT(city) FROM school_search_info");
+		   
+		   echo mysqli_num_rows($search_sel);
+		 ?>
+         </span>
             <h3>Cities Covered</h3>
          </div>
       </div>
@@ -443,37 +462,37 @@
    <section class="service_bg">
       <div class="container-fluid">
          <div class="col-lg-8 col-md-12 col-sm-12 services">
-            <div class="col-md-4 col-sm-4"> <a href="#">
+            <div class="col-md-4 col-sm-4"> <a href="javascript:void(0);">
                <div class="appear-animation" data-appear-animation="fadeInUp"><i class="fa fa-language"></i>
                   <h3>Inventive Design</h3>
                   <p>Lorem Ipsum is that has ai more normal content the making looke readable english.</p>
                </div>
                </a> </div>
-            <div class="col-md-4 col-sm-4"> <a href="#">
+            <div class="col-md-4 col-sm-4"> <a href="javascript:void(0);">
                <div class="appear-animation delay_1" data-appear-animation="fadeInUp"><i class="fa fa-newspaper-o"></i>
                   <h3>Easy Customize</h3>
                   <p>Lorem Ipsum is that has ai more normal content the making looke readable english.</p>
                </div>
                </a> </div>
-            <div class="col-md-4 col-sm-4"> <a href="#">
+            <div class="col-md-4 col-sm-4"> <a href="javascript:void(0);">
                <div class="appear-animation delay_2" data-appear-animation="fadeInUp"><i class="fa fa-clone"></i>
                   <h3>Responsive</h3>
                   <p>Lorem Ipsum is that has ai more normal content the making looke readable english.</p>
                </div>
                </a> </div>
-            <div class="col-md-4 col-sm-4"> <a href="#">
+            <div class="col-md-4 col-sm-4"> <a href="javascript:void(0);">
                <div class="appear-animation " data-appear-animation="fadeInUp"><i class="fa fa-tachometer"></i>
                   <h3>High Preformance</h3>
                   <p>Lorem Ipsum is that has ai more normal content the making looke readable english.</p>
                </div>
                </a> </div>
-            <div class="col-md-4 col-sm-4"> <a href="#">
+            <div class="col-md-4 col-sm-4"> <a href="javascript:void(0);">
                <div class="appear-animation delay_1" data-appear-animation="fadeInUp"><i class="fa fa-paint-brush"></i>
                   <h3>Color Options</h3>
                   <p>Lorem Ipsum is that has ai more normal content the making looke readable english.</p>
                </div>
                </a> </div>
-            <div class="col-md-4 col-sm-4"> <a href="#">
+            <div class="col-md-4 col-sm-4"> <a href="javascript:void(0);">
                <div class="appear-animation delay_2" data-appear-animation="fadeInUp"><i class="fa fa-user-secret"></i>
                   <h3>Free Support</h3>
                   <p>Lorem Ipsum is that has ai more normal content the making looke readable english.</p>
@@ -491,34 +510,34 @@
    <section class="workprocess">
       <div class="big_block">
          <div class="container">
-            <h2 class="text-center">Work <strong>Process</strong></h2>
+            <h2 class="text-center">HOW IT <strong>WORKS</strong></h2>
             <div class="row">
-               <div class="col-md-3 col-sm-6"><a href="#">
+               <div class="col-md-3 col-sm-6"><a href="javascript:void(0);">
                   <div class="block">
-                     <div class="icon first"><i class="fa fa-bullseye"></i></div>
-                     <h3>Unique Concept</h3>
-                     <p>Lorem Ipsum is that has ai more normal content the making looke readable english.</p>
+                     <div class="icon first"><i class="fa fa-search"></i></div>
+                     <h3>Search</h3>
+                     <p>Search and filter your Ideal School.</p>
                   </div>
                   </a></div>
-               <div class="col-md-3 col-sm-6"><a href="#">
+               <div class="col-md-3 col-sm-6"><a href="javascript:void(0);">
                   <div class="block">
-                     <div class="icon"><i class="fa fa-code"></i></div>
-                     <h3>Design &amp; Coding</h3>
-                     <p>Lorem Ipsum is that has ai more normal content the making looke readable english.</p>
+                     <div class="icon"><i class="fa fa-balance-scale"></i></div>
+                     <h3>Compare</h3>
+                     <p>Compare to find the best.</p>
                   </div>
                   </a></div>
-               <div class="col-md-3 col-sm-6"><a href="#">
+               <div class="col-md-3 col-sm-6"><a href="javascript:void(0);">
                   <div class="block">
-                     <div class="icon"><i class="fa fa-eye"></i></div>
-                     <h3>Testing</h3>
-                     <p>Lorem Ipsum is that has ai more normal content the making looke readable english.</p>
+                     <div class="icon"><i class="fa fa-weixin "></i></div>
+                     <h3>Query</h3>
+                     <p>Get your queries resolved.</p>
                   </div>
                   </a></div>
-               <div class="col-md-3 col-sm-6"><a href="#">
+               <div class="col-md-3 col-sm-6"><a href="javascript:void(0);">
                   <div class="block">
-                     <div class="icon last"><i class="fa fa-upload"></i></div>
-                     <h3>Launch</h3>
-                     <p>Lorem Ipsum is that has ai more normal content the making looke readable english.</p>
+                     <div class="icon last"><i class="fa fa-check"></i></div>
+                     <h3>Apply</h3>
+                     <p>Enroll your Kid to his dream school.</p>
                   </div>
                   </a></div>
             </div>
@@ -535,174 +554,31 @@
             <h2 class="text-center">Latest <strong>News</strong></h2>
             <div class="col-sm-4">
                <div class="block style_1 appear-animation" data-appear-animation="fadeInUp">
-                  <h3>HTML<strong>5</strong></h3>
-                  <div class="pic"><a href="#"><img class="img-responsive" src="images/blogpic_1.jpg" alt=""/></a></div>
-                  <em>January 1,2015 By : Franklin</em>
-                  <p>Lorem Ipsum is that has ai more normal distribution of letters opposed to using content here, content the making looke readable english is that has ai more normal distribution of letters opposed to using content here, content the making looke readable english.</p>
-                  <button type="button" class="btn btn-default style_2">Learn More</button>
+                  <h3>Continuous and Comprehensive Evaluation </h3>
+                  <div class="pic"><a href="<?php echo SECURE_PATH;?>static/blog/continuous_and_comprehensive_evaluation_(CCE).php"><img class="img-responsive" src="<?php echo SECURE_PATH;?>photos/blog/board-413157_1920.jpg"  alt=""/></a></div>
+                  <em>January 25,2016</em>
+                  <p>Continuous and Comprehensive Evaluation (CCE) system was introduced by the Central Board of Secondary Education (CBSE) in India to assess all aspects of a student's development on a continuous basis throughout the year. The assessment covers both scholastic subjects as well as co-scholastic areas such as performance in sports, art, music, dance, drama, and other cultural activities and social qualities.</p>
+                  <button type="button" class="btn btn-default style_2" onClick="window.location = '<?php echo SECURE_PATH;?>static/blog/continuous_and_comprehensive_evaluation_(CCE).php'">Learn More</button>
                   <div class="clearfix"></div>
                </div>
             </div>
             <div class="col-sm-4">
                <div class="block style_1 appear-animation delay_1" data-appear-animation="fadeInUp">
-                  <h3>CSS<strong>3</strong></h3>
-                  <div class="pic"><a href="#"><img class="img-responsive" src="images/blogpic_2.jpg" alt=""/></a></div>
-                  <em>January 2,2015 By : Franklin</em>
-                  <p>Lorem Ipsum is that has ai more normal distribution of letters opposed to using content here, content the making looke readable english is that has ai more normal distribution of letters opposed to using content here, content the making looke readable english.</p>
-                  <button type="button" class="btn btn-default style_2">Learn More</button>
+                  <h3>Choosing a right School for your child</h3>
+                  <div class="pic"><a href="<?php echo SECURE_PATH;?>static/blog/choosing_a_school_for_your_child.php"><img class="img-responsive" src="<?php echo SECURE_PATH;?>photos/blog/balloon-912804_1920.png" alt=""/></a></div>
+                  <em>January 27,2016</em>
+                  <p>It's my daughters third birthday !! As  Parents our next responsibility is to choose right school for our child. School time seems like a lifetime away for kids, but for the next few months, parents will be flooded with information about school admissions, open enrollment and school lotteries. </p>
+                  <button type="button" class="btn btn-default style_2" onClick="window.location = '<?php echo SECURE_PATH;?>static/blog/choosing_a_school_for_your_child.php'">Learn More</button>
                   <div class="clearfix"></div>
                </div>
             </div>
             <div class="col-sm-4">
-               <div class="block style_1 appear-animation delay_2" data-appear-animation="fadeInUp">
-                  <h3>word<strong>press</strong></h3>
-                  <div class="pic"><a href="#"><img class="img-responsive" src="images/blogpic_3.jpg" alt=""/></a></div>
-                  <em>January 3,2015 By : Franklin</em>
-                  <p>Lorem Ipsum is that has ai more normal distribution of letters opposed to using content here, content the making looke readable english is that has ai more normal distribution of letters opposed to using content here, content the making looke readable english.</p>
-                  <button type="button" class="btn btn-default style_2">Learn More</button>
-                  <div class="clearfix"></div>
-               </div>
+                
             </div>
          </div>
       </div>
    </section>
-   <!--testimonials-->
-   <section class="testimonials big_block">
-      <div class="container">
-         <div class="col-sm-12 col-md-10 col-md-offset-1">
-            <h2 class="style_2 text-center">thankfull <strong>Comments</strong>  <i class="fa fa-comments-o"></i> </h2>
-            <div id="test_carousel" class="owl-carousel owl-theme">
-               <div class="item">
-                  <div class="details">
-                     <p><span>&#8220;</span> Proin porta erat ligula, bibendum dapibus odio tempus sed. Ut tincidunt tincidunt erat. Ut id nisl quis enim dignissim sagittis porta erat ligula, bibendum dapibus odio tempus sed. <span>&#8221;</span></p>
-                     <img src="images/comment.jpg" width="80" height="80" alt=""/>
-                     <h4>George Clinton, Ui Designer</h4>
-                  </div>
-               </div>
-               <div class="item">
-                  <div class="about">
-                     <p><span>&#8220;</span> Lorem Ipsum is that has ai more normal distribution of letters opposed to using content here, content the making looke readable english is that has ai more normal distribution content here. <span>&#8221;</span></p>
-                     <img src="images/comment.jpg" width="80" height="80" alt=""/>
-                     <h4>George Clinton, Ui Designer</h4>
-                  </div>
-               </div>
-               <div class="item">
-                  <p><span>&#8220;</span> Lorem Ipsum letters opposed to using content here, content the making looke readable english is that has ai more normal distribution of letters opposed to using content here. <span>&#8221;</span></p>
-                  <img src="images/comment.jpg" width="80" height="80" alt=""/>
-                  <h4>George Clinton, Ui Designer</h4>
-               </div>
-            </div>
-         </div>
-      </div>
-   </section>
-   <!--team-->
-   <section class="team big_block">
-      <div class="container">
-         <h2 class="text-center">Family like a <strong>TEAM</strong></h2>
-         <div class="row">
-            <div class="col-md-3 col-sm-6 col-xs-12 block appear-animation" data-appear-animation="fadeIn">
-               <div>
-                  <div class="team-social">
-                     <ul>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                     </ul>
-                  </div>
-                  <img class="img-responsive" src="images/team_1.jpg" alt=""/> </div>
-               <div class="details">
-                  <h3>James Andreson</h3>
-                  <h4>Team Lead</h4>
-               </div>
-            </div>
-            <div class="col-md-3 col-sm-6 col-xs-12 block appear-animation delay_1" data-appear-animation="fadeIn">
-               <div>
-                  <div class="team-social">
-                     <ul>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                     </ul>
-                  </div>
-                  <img class="img-responsive" src="images/team_2.jpg" alt=""/> </div>
-               <div class="details">
-                  <h3>Lisa Rachel</h3>
-                  <h4>Web Developer</h4>
-               </div>
-            </div>
-            <div class="col-md-3 col-sm-6 col-xs-12 block appear-animation delay_2" data-appear-animation="fadeIn">
-               <div>
-                  <div class="team-social">
-                     <ul>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                     </ul>
-                  </div>
-                  <img class="img-responsive" src="images/team_3.jpg" alt=""/> </div>
-               <div class="details">
-                  <h3>Michael Jhonson</h3>
-                  <h4>UI Designer</h4>
-               </div>
-            </div>
-            <div class="col-md-3 col-sm-6 col-xs-12 block appear-animation delay_3" data-appear-animation="fadeIn">
-               <div>
-                  <div class="team-social">
-                     <ul>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                     </ul>
-                  </div>
-                  <img class="img-responsive" src="images/team_4.jpg" alt=""/> </div>
-               <div class="details">
-                  <h3>witherspoon</h3>
-                  <h4>UI Developer</h4>
-               </div>
-            </div>
-         </div>
-      </div>
-   </section>
-   <!--subscribe-->
-   <section class="subscribe big_block">
-      <div class="container">
-         <div class="pull-left appear-animation" data-appear-animation="fadeInLeft">
-            <h2 class="style_2">Subscribe Regular <strong>updates</strong></h2>
-         </div>
-         <div class="pull-right appear-animation" data-appear-animation="fadeInRight">
-            <form class="form-inline">
-               <div class="form-group">
-                  <input type="email" placeholder="Enter Your Mail id here" id="" class="form-control floating-label" />
-               </div>
-               <a class="btn btn-raised btn-info" href="#">Subscribe</a>
-            </form>
-         </div>
-      </div>
-   </section>
-   <!--clients-->
-   <section class="clients big_block">
-      <div class="container">
-         <div id="clients_carousel" class="owl-carousel owl-theme">
-            <div class="item"><a href="#"><img class="img-responsive" src="images/carousel/1.png" alt=""/></a></div>
-            <div class="item"><a href="#"><img class="img-responsive" src="images/carousel/2.png" alt=""/></a></div>
-            <div class="item"><a href="#"><img class="img-responsive" src="images/carousel/3.png" alt=""/></a></div>
-            <div class="item"><a href="#"><img class="img-responsive" src="images/carousel/4.png" alt=""/></a></div>
-            <div class="item"><a href="#"><img class="img-responsive" src="images/carousel/1.png" alt=""/></a></div>
-            <div class="item"><a href="#"><img class="img-responsive" src="images/carousel/2.png" alt=""/></a></div>
-            <div class="item"><a href="#"><img class="img-responsive" src="images/carousel/3.png" alt=""/></a></div>
-            <div class="item"><a href="#"><img class="img-responsive" src="images/carousel/4.png" alt=""/></a></div>
-            <div class="item"><a href="#"><img class="img-responsive" src="images/carousel/1.png" alt=""/></a></div>
-            <div class="item"><a href="#"><img class="img-responsive" src="images/carousel/2.png" alt=""/></a></div>
-            <div class="item"><a href="#"><img class="img-responsive" src="images/carousel/3.png" alt=""/></a></div>
-            <div class="item"><a href="#"><img class="img-responsive" src="images/carousel/4.png" alt=""/></a></div>
-         </div>
-      </div>
-   </section>
-
+ 
 
 
 <?php  $session->commonFooter();?>
@@ -710,7 +586,7 @@
 </section>
  
 <!--go-top link--> 
-<a href="#" class="go-top"><i class="fa fa-angle-up"></i></a> 
+<a href="javascript:void(0);" class="go-top"><i class="fa fa-angle-up"></i></a> 
  
  
 <?php $session->commonJS();?> 

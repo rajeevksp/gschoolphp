@@ -18,7 +18,7 @@ define("DB_PASS", "");
 
 //define("DB_PASS", "");
 
-define("DB_NAME", "goolschool");
+define("DB_NAME", "gschooldev");
 
 /**
  * Database Table Constants - these constants

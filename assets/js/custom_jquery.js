@@ -363,9 +363,19 @@ function initAutocomplete(){
 	  elem.remove(); }
 	 });
 
+ $("#inputSchool").autoSuggest("http://"+location.host+"/gschooldev/utility/autosuggest", {queryParam: "entity="+$('#school_entity').val()+"&school",minChars: 1, matchCase: false, asHtmlID:'sibschool', selectedItemProp: "name",selectionLimit:2, searchObjProps: "value,name", selectedValuesProp: "value", preFill: prefill,
+	 
+	 selectionRemoved: function(elem){  
+	 loc = $('#as-values-sibschool').val();
+	 txt = elem.text();
+	  $('#as-values-sibschool').val(loc.replace(txt.substr(1),''));
+	  elem.remove(); }
+	 });
 
 
 }
+
+
 
 
 function setStateGet(id,url,datas){
@@ -449,22 +459,23 @@ function validateMobile(mobile)
  
 function addToCompare(school_code,school_name,location){
      
+	 
      $(".compareHolder").slideDown('slow');
      
      cmp = $('#compare_schools').val();
       
-      cnt = cmp.split(",");
-      
-      
-     if(cmp.search(school_code) == -1){
+      cnt = cmp.split(","); 
+	  
+	 
+     if((cmp.search(school_code) == -1 || school_code.length == 0 ) ){
       
   
-     $('#compareHolder').append('<li>'+school_name+'<input type="hidden" class="compare_school_ids" value="'+school_code+'"/> <span class="remove" onClick="removeCompare($(this))">X</span>\n\
-<br /><span class="loc"><i class="fa fa-map-marker"></i> '+location+'</span></li>')
+     $('#compareHolder').append('<div class="col-xs-12 col-sm-3 compareItem">'+school_name+'<input type="hidden" class="compare_school_ids" value="'+school_code+'"/> <span class="remove" onClick="removeCompare($(this))">X</span>\n\
+<br /><span class="loc"><i class="fa fa-map-marker"></i> '+location+'</span></div>')
  
     
          school_ids = "";
-         $('#compareHolder li').each(function(index){
+         $('#compareHolder .compareItem').each(function(index){
              school_ids+=$(this).children('.compare_school_ids').val()+",";
          });
               $('#compare_schools').val(school_ids);
@@ -475,10 +486,10 @@ function addToCompare(school_code,school_name,location){
 function removeCompare(ref){
     
     
-    ref.parent("li").remove();
+    ref.parent(".compareItem").remove();
     
      school_ids = "";
-         $('#compareHolder li').each(function(index){
+         $('#compareHolder .compareItem').each(function(index){
              school_ids+=$(this).children('.compare_school_ids').val()+",";
          });
               $('#compare_schools').val(school_ids);

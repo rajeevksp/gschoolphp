@@ -34,7 +34,7 @@
 	  
 }
 .personalized_search{
-	width:50%;
+	width:60%;
 	margin:2px auto;
 	padding-bottom:20px;
 	text-align:center;}
@@ -94,7 +94,9 @@ font-weight:400;
 }
 .slider.slider-horizontal {
     height:60px;
-    width: 70%;
+    width: 75%;
+	margin:0px auto;
+  
 }
 .slider-track-low, .slider-track-high {
     background: #999 none repeat scroll 0 0;
@@ -164,8 +166,14 @@ font-weight:400;
 
 .adBox{
 	height:320px;
-	border:1px solid #888;
-	margin-bottom:12px;
+	 margin-bottom:12px;
+	 text-align:center;
+}
+
+.adBox img{
+	width:90%;
+	height:auto;
+	max-height:320px;
 }
 .school{
 	
@@ -191,22 +199,24 @@ font-weight:400;
 }
 
 .schoolResults .panel-heading .schoolRating{
-	position:absolute;
-	top:10px;
-	right:10px;
+	 
 	 
 }
-.schoolRating a{
-	color:#FF6;
+.schoolRating .btn.btn-fab {
+	
+	margin:0px auto;
+	display:block;
+	
 }
 .schoolRating p{
-	text-align:center;
+	
 	margin:0px auto;
 	color:#fff;
+	text-align:center;
 }
 
 .panel-default .schoolRating p{
-    color:#00b7c3;
+    color:#00b7c3;text-align:center;
 }
 
 .schoolRating span .dark{
@@ -214,11 +224,17 @@ font-weight:400;
 }
 
 .schoolResults .schoolCompare{
-    position:absolute;
-    top:10px;
-    right:10%;
-	
+	  height: 56px;
+    margin: 0;
+    padding: 15px;
+	text-align:center;
+	cursor:pointer;
 }
+
+ .panel-primary .schoolCompare a{
+	color:#fff; 
+	cursor:pointer;
+ }
 
 .panel-heading h2{
 	font-size:26px;
@@ -265,10 +281,12 @@ font-weight:400;
 .featuresList .ficon{
 	margin:8px;
 }
+.featuredSchools h2{
+  color:#00b7c3 ;	
+}
 .similarSchools h2{
   color:#666;	
 }
-
 .similarSchools .panel-body img{
 	width:100%;
 	height:auto;
@@ -300,13 +318,18 @@ font-weight:400;
 }
 .mapScroll{
 	 height:90%;
+	 max-height:500px;
 	overflow:auto;
 }
 
 .schoolBcg{
 	 background: url(../Photos/pencil-sharpener-838605_1920.jpg) no-repeat center;
+	  position: relative;
+    
+    overflow: hidden;
 	 border-bottom:1px solid #666;
 }
+ 
 .schoolProfileHead{
 	 padding-top:20px;
 	 padding-bottom:20px;
@@ -348,6 +371,7 @@ font-weight:400;
 .schoolProfilePic img,.mschoolProfilePic img{
 	 width:100%;
 	 height:auto;
+	 max-height:160px;
 	vertical-align: middle;
   margin-bottom:0.25em;
   overflow: hidden;
@@ -378,8 +402,9 @@ font-weight:400;
   padding-bottom:10px;
 }
 
-.schoolProfileRating{
-	
+.schoolProfileRating a.btn{
+	margin:0px auto;
+	display:block;
 }
 
 .schoolProfileRating .rating {
@@ -587,21 +612,30 @@ font-weight:400;
 .compareHolder{
     display:none;
     
-    height:70px;
-    padding-left:2px;
-    padding-top:8px;    
+  
     margin:0px;
-    background: #fff;
+    
 }
 
-.compareHolder ul{
-    padding:0;
-    margin:0;
+#compareHolder{
+       
+    
+    padding:8px 6px;  
+	display:block;
+	background:#fff;
 }
 
+.compareItem{
+	padding:2px 4px;
+    margin-right: 8px;
+    position:relative;
+    border:1px dotted #00b7c3;
+    text-align: left;
+    color:#00b7c3;
+}
 .compareHolder ul li{
     list-style-type: none;
-    float:left;
+     display:inline-block;
     padding:2px 4px;
     margin-right: 8px;
     position:relative;
@@ -625,3 +659,14 @@ font-weight:400;
  .cycle{
 	 cursor: move;
  }
+ .enquiry_form{
+	width:85%; 
+ }
+ .input-group-btn:last-child > .btn, .input-group-btn:last-child > .btn-group {
+	z-index:1; 
+ }
+ 
+ .radioClass{
+	position:relative;display:block;margin-top:10px;margin-bottom:10px; 
+ }
+ .radioClass label{min-height:20px;padding-left:20px;margin-bottom:0;font-weight:400;cursor:pointer}.radioClass input[type=checkbox],.radioClass input[type=radio],.radioClass input[type=radio]{position:absolute;margin-top:4px\9;margin-left:-20px}

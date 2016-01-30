@@ -77,14 +77,14 @@
            <div class=" col-sm-5 col-md-5 check">
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" class="form-control" name="transportation" <?php if(isset($post['transportation'])){ if($post['transportation'] == 'true'){ echo 'checked="checked"';}}?>  value="1" />
+                        <input type="checkbox" class="form-control" name="transportation" <?php if(isset($post['transportation'])){ if($post['transportation'] == 1){ echo 'checked="checked"';}}?>  value="1" />
                         <span class="checkbox-material">
                            <span class="check"></span>
                         </span>
                         &#160;Transportation
                     </label>&#160;&#160;
                     <label>
-                        <input type="checkbox" class="form-control"  name="residential" <?php if(isset($post['residential'])){ if($post['residential'] == 'true'){ echo 'checked="checked"';}}?>  value="1" />
+                        <input type="checkbox" class="form-control"  name="residential" <?php if(isset($post['residential'])){ if($post['residential'] == 1){ echo 'checked="checked"';}}?>  value="1" />
                         <span class="checkbox-material">
                            <span class="check"></span>
                         </span>
@@ -92,7 +92,7 @@
                     </label>
                 &#160;&#160;
                     <label>
-                        <input type="checkbox" class="form-control"  <?php if(isset($post['playground'])){ if($post['playground'] == 'true'){ echo 'checked="checked"';}}?> name="playground" value="1" />
+                        <input type="checkbox" class="form-control"  <?php if(isset($post['playground'])){ if($post['playground'] == 1){ echo 'checked="checked"';}}?> name="playground" value="1" />
                         <span class="checkbox-material">
                            <span class="check"></span>
                         </span>
@@ -236,12 +236,7 @@
                    <div class="col-sm-4">
                    </div>
                    <div class="col-sm-4">
-                       <a  class="btn   btn-default btn-raised btn-xs" onclick="<?php if(isset($post['as_values_location'])){ 
-						 ?>
-                         window.location = '<?php echo SECURE_PATH.'search/?entity_type='.$post['entity_type'].'&as_values_location='.$post['as_values_location'];?>';
-                         <?php
-						 }
-						 ?>"><i class="fa fa-refresh"></i> Clear</a>
+                       <a  class="btn   btn-default btn-raised btn-xs" onclick="this.form.reset()"><i class="fa fa-refresh"></i> Clear</a>
          <a  class="btn  btn-warning btn-raised   btn-xs" id="moreBtn" onclick="$('#moreFilters').slideToggle('slow',function(){ $('#moreBtn i').toggleClass('fa-minus')})"><i class="fa fa-plus"></i> More</a>
         
                    </div>
@@ -276,13 +271,13 @@
          
          <div class="container">
           <div class="compareHolder" >
-                        <div class="col-sm-10 col-xs-12">
-                            <div id="compareHolder" class="row">
+                        <div class="col-sm-10">
+                            <ul id="compareHolder">
 
 
-                            </div>
+                            </ul>
                         </div>
-                        <div class="col-sm-2 col-xs-12">
+                        <div class="col-sm-2">
                              
               <input type="hidden" id="compare_schools" name="compare_schools" value="" />
                
@@ -295,23 +290,22 @@
              <div class="col-sm-8 col-md-8">
              
                    
-             
-                 
+                             
              <div class="resultPagination">
                  <div class="pull-left">
                    <ul class="breadcrumb"  >
-                         <li><a href="javascript:void(0)">Hyderabad</a></li>
+                         <li><a  >Hyderabad</a></li>
                          <?php
 						 if(isset($post['as_values_location'])){ 
 						 ?>
-                         <li><a href="<?php echo SECURE_PATH.'search/?entity_type=school&as_values_location='.$post['as_values_location'];?>"><?php   echo  ucwords(trim($post['as_values_location'],' ,'));?></a></li>
+                         <li><a href="<?php SECURE_PATH.'search/?entity_type=school&as_values_location='.$post['as_values_location'];?>"><?php   echo  ucwords(trim($post['as_values_location'],' ,'));?></a></li>
                          <?php
 						 }
 						 ?>
                             <?php
 						 if(isset($post['board'])){ 
 						 ?>
-                         <li><a href="<?php echo SECURE_PATH.'search/?entity_type=school&as_values_location='.$post['as_values_location'].'&board='.$post['board'];?>"><?php   echo  $post['board'];?></a></li>
+                         <li><a href="<?php SECURE_PATH.'search/?entity_type=school&as_values_location='.$post['as_values_location'].'&board='.$post['board'];?>"><?php   echo  $post['board'];?></a></li>
                          <?php
 						 }
 						 ?>
@@ -364,15 +358,15 @@
 	 
 	 
 	  
-	  $database->query("INSERT INTO user_search VALUES(NULL, '".$post['as_values_location']."', '".$entity_type."', '".$post['board']."', '".$post['school_type']."', '".$post['full_name']."', '".$post['user_email']."', '".$post['user_mobile']."', '".$post['salary_range']."', '".$post['as-values-sibschool']."', '".$jt."', '".$tr."', '".$res."','".$_SERVER['REMOTE_ADDR']."',NOW())"); 
+	  $database->query("INSERT INTO user_search VALUES(NULL, '".$post['as_values_location']."', '".$entity_type."', '".$post['board']."', '".$post['school_type']."', '".$post['full_name']."', '".$post['user_email']."', '".$post['user_mobile']."', '".$post['salary_range']."', '".$post['sibling_school']."', '".$jt."', '".$tr."', '".$res."','".$_SERVER['REMOTE_ADDR']."',NOW())"); 
 	  
 	  unset($_REQUEST['personalized']);
 	 
  }
-		 else{
+ else{
 	  $database->query("INSERT INTO user_search VALUES(NULL, '".$post['as_values_location']."', '".$entity_type."', '', '', '', '', '', '', '', '', '', '','".$_SERVER['REMOTE_ADDR']."',NOW())"); 
  }
-				
+					
 					
 					
 					$loc_array = explode(',',$location);
@@ -402,17 +396,17 @@
 					$sponsored_school_sel = $database->query($query);
 				 
                     $school_codes = "";
-					$tot_results = 0; 				
-					$sposored_schools = array(); 
+					$tot_results = 0; 	
+					$sponsored_schools = array();			 
 				     //Sponsored Results here
 				     if(mysqli_num_rows($sponsored_school_sel) > 0){
 						  
-						  while($school = mysqli_fetch_array($sponsored_school_sel)) {
+						  while($sch = mysqli_fetch_array($sponsored_school_sel)) {
 							  
-							  $school_codes.= "'".$school['school_code']."',";
-							
-							$sponsored_schools[] = $school; 
-							  $tot_results++;
+							  $school_codes.= "'".$sch['school_code']."',";
+							 
+							  $sponsored_schools[] = $sch;
+							  //$tot_results++;
 						  }
 						 
 					 }
@@ -423,14 +417,15 @@
 					   $school_con = "  AND school_search_info.school_code NOT IN (".trim($school_codes,',').")";
 					 }
 				 
-		         	//Entity and advertiser condition
-					    $query_con = "WHERE (school_search_info.school_code = ".$main_table.".school_code) AND school_search_info.entity_type = ".$entity_type.$school_con;
+		         	
+					
+					
+					//Entity and advertiser condition
+					 $query_con = "WHERE (school_search_info.school_code = ".$main_table.".school_code) AND school_search_info.entity_type = ".$entity_type.$school_con;
 						
 						if(strlen($loc_con) > 0)
 						  $query_con = $query_con." AND (".$loc_con.")";
-							    
-
-				 
+							 
 				 	//Filter Conditions
 					$filter_con = "";
 					
@@ -501,18 +496,18 @@
 					  if(strlen($filter_con) > 0)
 					    $query_con = $query_con." AND (".$filter_con.")";
 					
-				        $query = "SELECT school_search_info.*,school_search_info.school_code from school_search_info,".$main_table." ".$query_con."  ORDER BY   ranking DESC,user_ranking DESC LIMIT 0,50";
+				     echo   $query = "SELECT school_search_info.*,school_search_info.school_code from school_search_info,".$main_table." ".$query_con."  ORDER BY   ranking DESC,user_ranking DESC LIMIT 0,50";
 					
 					$school_sel = $database->query($query);
 				   
-				   
+				    $normal_display_limit = 2;
+						 
 				   //Normal Results here
 				     if(mysqli_num_rows($school_sel) > 0){
 						  
-						  $cnt = 0;
-						  
-						  while($school = mysqli_fetch_array($school_sel)) {
-							 
+						  while($school = mysqli_fetch_array($school_sel) && $normal_display_limit > 0) {
+							
+							  
 							  $display = 1;
 							  if(isset($post['playground'])){
 								if(strlen($post['playground']) > 0){
@@ -536,7 +531,9 @@
 						      
 							  if($display > 0){
 							  
-							  
+							    echo "Gereas fa sdfa df s".$display.' -- ';
+							
+							print_r($school);
 							 
 							 ?> 
 							  
@@ -544,65 +541,52 @@
                           
                         <div class="panel-heading">
                            
-                           
-                           <div class="col-md-9 col-xs-12">
                             <h2 class="panel-title" ><a href="../school?sc=<?php echo $school['school_code'];?>" ><?php echo ucwords($school['school_name']);?></a></h2>
                             
                             <h5><i class="fa fa-map-marker"></i> <span class="loc"> <?php echo ucwords($school['location']);?></span>,  <?php echo ucwords($school['city']);?></h5>
-                            </div>
                             
-                            <div class="col-md-3  col-xs-12">
-                            
-                            <div class="schoolCompare col-xs-6" title="Add to Compare" data-toggle="tooltip">
-                                <a class="" onclick="addToCompare('<?php echo $school['school_code'];?>','<?php echo ucwords($school['school_name']);?>','<?php echo ucwords($school['location']).", ".ucwords($school['city']);?>')">Compare</a>
+                            <div class="schoolCompare" title="Add to Compare" data-toggle="tooltip">
+                                <a class="" onclick="addToCompare('<?php echo $school['school_code'];?>','<?php echo ucwords($school['school_name']);?>','<?php echo ucwords($school['location']).", ".ucwords($school['city']);?>')"><i class="fa fa-expand"></i> Compare</a>
                                 
                             </div>
-                            <div class="schoolRating col-xs-6">
+                            <div class="schoolRating">
                                
                                 <a class="btn btn-warning btn-block btn-fab btn-raised " href="javascript:void(0)"><i class="fa fa-star"></i></a>
                             <p><?php echo $school['ranking'];?></p>
                             </div>
-                              </div>
                               
-                              <div style="clear:both"></div>
                         </div>
                         <div class="panel-body">
                                
                                       <div class="row">
-                                      <div class="col-sm-3 col-xs-12 ">
-                                      <div class="schoolProfilePic">
-                                          <img src="<?php echo $session->get_school_logo($school['school_code']);?>" alt="No Logo" title="<?php echo ucwords($school['school_name']);?>" /></div>
+                                      <div class="col-sm-3 col-xs-3 schoolProfilePic">
+                                          <img src="<?php echo $session->get_school_logo($school['school_code']);?>" alt="No Logo" title="<?php echo ucwords($school['school_name']);?>" />
                                       </div>
                                      
-                                      <div class="col-sm-9 col-xs-12">
+                                      <div class="col-sm-9 col-xs-9">
                                          <div class="row">
-                                             <div class="col-xs-12 col-sm-4">Board: <b>
+                                             <div class="col-xs-4">Board: <b>
                                                     <?php $session->getBoards($school['school_code']);?>  
                                                      
                                                  </b></div>
-                                             <div class="col-xs-12 col-sm-6">Medium: <b>
+                                             <div class="col-xs-6">Medium: <b>
                                                      <?php $session->getMediums($school['school_code']);?>  
                                                  </b></div>
-                                             <div class="col-xs-12 col-sm-2">Est. <b><?php echo $session->get_name($main_table,'school_code',$school['school_code'],'establishment_year');?></b></div>
+                                             <div class="col-xs-2">Est. <b><?php echo $session->get_name($main_table,'school_code',$school['school_code'],'establishment_year');?></b></div>
                                            
                                          </div>
-                                         
-                                         <div class="row">
-                                              <div class="col-xs-12 col-sm-4"><i class="fa fa-phone"></i> <?php echo "+91-".$session->get_name($main_table,'school_code',$school['school_code'],'phone_number_1');
+                                          <div class="row">
+                                              <div class="col-xs-4"><i class="fa fa-phone"></i> <?php echo "+91-".$session->get_name($main_table,'school_code',$school['school_code'],'phone_number_1');
 											  if(strlen($session->get_name($main_table,'school_code',$school['school_code'],'phone_number_2')) > 0){
 												echo ', '.$session->get_name($main_table,'school_code',$school['school_code'],'phone_number_2');  
 											  }
 											  ?></div>
-                                              <div class="col-xs-12 col-sm-6"><i class="fa fa-envelope"></i> <?php echo $session->get_name($main_table,'school_code',$school['school_code'],'email_id_1');?></div>
-                                              <div class="col-xs-12 col-sm-2"><i class="fa fa-link "></i> <a href="http://<?php echo $session->get_name($main_table,'school_code',$school['school_code'],'website_url');?>"> Visit</a></div>
+                                              <div class="col-xs-6"><i class="fa fa-envelope"></i> <?php echo $session->get_name($main_table,'school_code',$school['school_code'],'email_id_1');?></div>
+                                              <div class="col-xs-2"><i class="fa fa-link "></i> <a href="http://<?php echo $session->get_name($main_table,'school_code',$school['school_code'],'website_url');?>"> Visit</a></div>
                                            
                                          </div>
                                           
-                                    
-                                      </div>
-                                      <div class="col-sm-3 col-xs-12"></div>
-                                      <div class="col-sm-9 col-xs-12">
-                                           <div class="row schoolInfo">
+                                         <div class="row schoolInfo">
                                          
                                          <div class="col-xs-12">
                                              <?php 
@@ -715,294 +699,78 @@
 							<?php  
 							 
 							  $tot_results++;
-						  
-						   $cnt++;
-							  if($cnt >= 2){
-								 break;  
-							  }
-							  }
-						  
-						  }
-						 
-					 }
-					 
-					 
-				      if(count($sponsored_schools) > 0){
-						  foreach($sponsored_schools as $school){ 
-						  ?>
-                          <div class="panel  panel-primary"  >
-                          
-                        <div class="panel-heading">
-                           
-                           
-                           <div class="col-md-9 col-xs-12">
-                            <h2 class="panel-title" ><a href="../school?sc=<?php echo $school['school_code'];?>" ><?php echo ucwords($school['school_name']);?></a></h2>
-                            
-                            <h5><i class="fa fa-map-marker"></i> <span class="loc"> <?php echo ucwords($school['location']);?></span>,  <?php echo ucwords($school['city']);?></h5>
-                            </div>
-                            
-                            <div class="col-md-3  col-xs-12">
-                            
-                            <div class="schoolCompare col-xs-6" title="Add to Compare" data-toggle="tooltip">
-                                <a class="" onclick="addToCompare('<?php echo $school['school_code'];?>','<?php echo ucwords($school['school_name']);?>','<?php echo ucwords($school['location']).", ".ucwords($school['city']);?>')">Compare</a>
-                                
-                            </div>
-                            <div class="schoolRating col-xs-6">
-                               
-                                <a class="btn btn-warning btn-block btn-fab btn-raised " href="javascript:void(0)"><i class="fa fa-star"></i></a>
-                            <p><?php echo $school['ranking'];?></p>
-                            </div>
-                              </div>
-                              
-                              <div style="clear:both"></div>
-                        </div>
-                        <div class="panel-body">
-                               
-                                      <div class="row">
-                                      <div class="col-sm-3 col-xs-12 ">
-                                      <div class="schoolProfilePic">
-                                          <img src="<?php echo $session->get_school_logo($school['school_code']);?>" alt="No Logo" title="<?php echo ucwords($school['school_name']);?>" /></div>
-                                      </div>
-                                     
-                                      <div class="col-sm-9 col-xs-12">
-                                         <div class="row">
-                                             <div class="col-xs-12 col-sm-4">Board: <b>
-                                                    <?php $session->getBoards($school['school_code']);?>  
-                                                     
-                                                 </b></div>
-                                             <div class="col-xs-12 col-sm-6">Medium: <b>
-                                                     <?php $session->getMediums($school['school_code']);?>  
-                                                 </b></div>
-                                             <div class="col-xs-12 col-sm-2">Est. <b><?php echo $session->get_name($main_table,'school_code',$school['school_code'],'establishment_year');?></b></div>
-                                           
-                                         </div>
-                                         
-                                         <div class="row">
-                                              <div class="col-xs-12 col-sm-4"><i class="fa fa-phone"></i> <?php echo "+91-".$session->get_name($main_table,'school_code',$school['school_code'],'phone_number_1');
-											  if(strlen($session->get_name($main_table,'school_code',$school['school_code'],'phone_number_2')) > 0){
-												echo ', '.$session->get_name($main_table,'school_code',$school['school_code'],'phone_number_2');  
-											  }
-											  ?></div>
-                                              <div class="col-xs-12 col-sm-6"><i class="fa fa-envelope"></i> <?php echo $session->get_name($main_table,'school_code',$school['school_code'],'email_id_1');?></div>
-                                              <div class="col-xs-12 col-sm-2"><i class="fa fa-link "></i> <a href="http://<?php echo $session->get_name($main_table,'school_code',$school['school_code'],'website_url');?>"> Visit</a></div>
-                                           
-                                         </div>
-                                          
-                                    
-                                      </div>
-                                      <div class="col-sm-3 col-xs-12"></div>
-                                      <div class="col-sm-9 col-xs-12">
-                                           <div class="row schoolInfo">
-                                         
-                                         <div class="col-xs-12">
-                                             <?php 
-											     $intro = $session->get_name($main_table,'school_code',$school['school_code'],'school_introduction');
-											     if(strlen($intro) > 50)
-												   $intro =substr($intro,0,50).'...';
-													
-											     echo ucfirst($intro);		
-											 ?>
-                                         </div>
-                                         </div>
-                                         
-                                      <div class="row">
-                                       <div class="col-xs-12 featuresList">
-                                                  
-                                                  
-                                                   <?php
-												     
-													 if($school['school_type'] == 1){
-														?>
-                                                        <span class="ficon" title="Boys">
-                                              
-                                                        <i class="fa fa-2x fa-male text-success" ></i>
-                                                       </span>
-                                                        <?php 
-													 }
-													 if($school['school_type'] == 2){
-														?>
-                                                        <span class="ficon" title="Girls">
-                                              
-                                                       <i class="fa fa-2x fa-female text-success" ></i>
-                                                       </span>
-                                                        <?php 
-													 }
-													 if($school['school_type'] == 3){
-														?>
-                                                         <span class="ficon" title="Co-Educational">
-                                              
-                                                       <i class="fa fa-2x fa-male text-success" ></i>
-                                                       <i class="fa fa-2x fa-female text-success" ></i>
-                                                       </span>
-                                                        <?php 
-													 }
-													 if($entity_type == 0){
-													    
-												       $facilities_sel = $database->query("SELECT * FROM school_facilities_info WHERE school_code = '".$school['school_code']."'");
-					                                    
-														if(mysqli_num_rows($facilities_sel) > 0){
-														   $facility = mysqli_fetch_array($facilities_sel);
-														   ?>
-                                                             
-                                                             
-                                                          <span class="ficon" title="<?php $facility['no_of_books_lib'].' books';?>">
-                                                            <i class="fa fa-2x fa-book <?php  if($facility['library_present'] == 1){ echo "text-success"; }?>"></i>
-                                                          </span>
-                                                           <span class="ficon" title="Transportation">
-                                                            <i class="fa fa-2x fa-bus <?php  if($facility['transport_provided'] == 1){ echo "text-success"; }?>"></i>
-                                                          </span>
-                                                           <span class="ficon" title="Internet">
-                                                            <i class="fa fa-2x fa-wifi <?php  if($facility['internet'] == 1){ echo "text-success"; }?>"></i>
-                                                          </span>
-                                                           <span class="ficon" title="<?php $facility['no_of_computers'].' computers';?>">
-                                                            <i class="fa fa-2x fa-desktop <?php  if($facility['no_of_computers'] > 0){ echo "text-success"; }?>"></i>
-                                                          </span>
-                                                           <span class="ficon" title="Playground">
-                                                            <i class="fa fa-2x fa-futbol-o <?php  if($facility['playground_present'] == 1){ echo "text-success"; }?>"></i>
-                                                          </span>
-                                                           <span class="ficon" title="Medical Checkup">
-                                                            <i class="fa fa-2x fa-medkit <?php  if($facility['medical_checkup'] == 1){ echo "text-success"; }?>"></i>
-                                                          </span>    
-                                                              
-                                                             <span class="ficon" title="Cafeteria">
-                                                            <i class="fa fa-2x fa-coffee <?php  if($facility['cafeteria_present'] == 1){ echo "text-success"; }?>"></i>
-                                                          </span>    
-                                                              
-                                                            <span class="ficon" title="Hostel">
-                                                            <i class="fa fa-2x fa-bed <?php  if($facility['boys_hostel'] > 0 || $facility['girls_hostel'] > 0){ echo "text-success"; }?>"></i>
-                                                          </span>    
-                                                              
-                                                             <span class="ficon" title="<?php $facility['no_of_books_lib'].' books';?>">
-                                                            <i class="fa fa-2x fa-book <?php  if($facility['library_present'] == 1){ echo "text-success"; }?>"></i>
-                                                          </span>    
-                                                              
-                                                                        
-                                                              
-                                                              
-                                                            <?php   
-														   
-														   	
-														}
-																					    	 
-														 
-													 }
-												  
-												  ?>
-                                                  
-                                                  
-                                        
-                                         
-                                       </div>
-                                       
-                                      </div>
-                                      </div>
-                                      </div>
-                                      
-                                      
-                        </div>
-                    </div>
-                          <?php
-						  
-						  }
-                    
-                    }
-                    
-                    
-                     //Normal Results here
-				     if(mysqli_num_rows($school_sel) > 2){
-						  
-						  while($school = mysqli_fetch_array($school_sel)) {
-							  
-							  $display = 1;
-							  if(isset($post['playground'])){
-								if(strlen($post['playground']) > 0){
-								   
-								   if($entity_type == 0)
-									$display = $database->get_name('school_facilities_info','school_code',$school['school_code'],'playground_present');
-									
-									 if($entity_type == 1)
-									$display = $database->get_name('preschool_facilities_info','school_code',$school['school_code'],'playarea_present');	
-								}
-						      }
-							  
-							  
-							   if(isset($post['transportation'])){
-								if(strlen($post['transportation']) > 0){
-								  
-									 
-									$display = $database->get_name($main_table,'school_code',$school['school_code'],'transport_provided');	
-								}
-						      }
 						      
-							  if($display > 0){
+							  }
+						  
+						  
+						      
+							  $normal_display_limit--;
+						  
+						  }
+						  
+						  
+					 
+					 }	 
+					 
+					    reset($sponsored_school_sel);
+						
+						   //Sponsored Results here
+				     if(mysqli_num_rows($sponsored_school_sel) > 0){
+						 foreach($sponsored_schools as $school){
 							  
-							  
-							 
+							   
 							 ?> 
 							  
-							  <div class="panel  panel-default"  >
+							  <div class="panel  panel-primary"  >
                           
                         <div class="panel-heading">
                            
-                           
-                           <div class="col-md-9 col-xs-12">
                             <h2 class="panel-title" ><a href="../school?sc=<?php echo $school['school_code'];?>" ><?php echo ucwords($school['school_name']);?></a></h2>
                             
                             <h5><i class="fa fa-map-marker"></i> <span class="loc"> <?php echo ucwords($school['location']);?></span>,  <?php echo ucwords($school['city']);?></h5>
-                            </div>
                             
-                            <div class="col-md-3  col-xs-12">
-                            
-                            <div class="schoolCompare col-xs-6" title="Add to Compare" data-toggle="tooltip">
-                                <a class="" onclick="addToCompare('<?php echo $school['school_code'];?>','<?php echo ucwords($school['school_name']);?>','<?php echo ucwords($school['location']).", ".ucwords($school['city']);?>')">Compare</a>
+                            <div class="schoolCompare" title="Add to Compare" data-toggle="tooltip">
+                                <a class="btn btn-success btn-block btn-fab btn-raised " onclick="addToCompare('<?php echo $school['school_code'];?>','<?php echo ucwords($school['school_name']);?>','<?php echo ucwords($school['location']).", ".ucwords($school['city']);?>')"><i class="fa fa-expand"></i></a>
                                 
                             </div>
-                            <div class="schoolRating col-xs-6">
+                            <div class="schoolRating">
                                
                                 <a class="btn btn-warning btn-block btn-fab btn-raised " href="javascript:void(0)"><i class="fa fa-star"></i></a>
                             <p><?php echo $school['ranking'];?></p>
                             </div>
-                              </div>
                               
-                              <div style="clear:both"></div>
                         </div>
                         <div class="panel-body">
                                
                                       <div class="row">
-                                      <div class="col-sm-3 col-xs-12 ">
-                                      <div class="schoolProfilePic">
-                                          <img src="<?php echo $session->get_school_logo($school['school_code']);?>" alt="No Logo" title="<?php echo ucwords($school['school_name']);?>" /></div>
+                                      <div class="col-sm-3 col-xs-3 schoolProfilePic">
+                                          <img src="<?php echo $session->get_school_logo($school['school_code']);?>" alt="No Logo" title="<?php echo ucwords($school['school_name']);?>" />
                                       </div>
                                      
-                                      <div class="col-sm-9 col-xs-12">
+                                      <div class="col-sm-9 col-xs-9">
                                          <div class="row">
-                                             <div class="col-xs-12 col-sm-4">Board: <b>
+                                             <div class="col-xs-4">Board: <b>
                                                     <?php $session->getBoards($school['school_code']);?>  
                                                      
                                                  </b></div>
-                                             <div class="col-xs-12 col-sm-6">Medium: <b>
+                                             <div class="col-xs-6">Medium: <b>
                                                      <?php $session->getMediums($school['school_code']);?>  
                                                  </b></div>
-                                             <div class="col-xs-12 col-sm-2">Est. <b><?php echo $session->get_name($main_table,'school_code',$school['school_code'],'establishment_year');?></b></div>
+                                             <div class="col-xs-2">Est. <b><?php echo $session->get_name($main_table,'school_code',$school['school_code'],'establishment_year');?></b></div>
                                            
                                          </div>
-                                         
-                                         <div class="row">
-                                              <div class="col-xs-12 col-sm-4"><i class="fa fa-phone"></i> <?php echo "+91-".$session->get_name($main_table,'school_code',$school['school_code'],'phone_number_1');
+                                          <div class="row">
+                                              <div class="col-xs-4"><i class="fa fa-phone"></i> <?php echo "+91-".$session->get_name($main_table,'school_code',$school['school_code'],'phone_number_1');
 											  if(strlen($session->get_name($main_table,'school_code',$school['school_code'],'phone_number_2')) > 0){
 												echo ', '.$session->get_name($main_table,'school_code',$school['school_code'],'phone_number_2');  
 											  }
 											  ?></div>
-                                              <div class="col-xs-12 col-sm-6"><i class="fa fa-envelope"></i> <?php echo $session->get_name($main_table,'school_code',$school['school_code'],'email_id_1');?></div>
-                                              <div class="col-xs-12 col-sm-2"><i class="fa fa-link "></i> <a href="http://<?php echo $session->get_name($main_table,'school_code',$school['school_code'],'website_url');?>"> Visit</a></div>
+                                              <div class="col-xs-6"><i class="fa fa-envelope"></i> <?php echo $session->get_name($main_table,'school_code',$school['school_code'],'email_id_1');?></div>
+                                              <div class="col-xs-2"><i class="fa fa-link "></i> <a href="http://<?php echo $session->get_name($main_table,'school_code',$school['school_code'],'website_url');?>"> Visit</a></div>
                                            
                                          </div>
                                           
-                                    
-                                      </div>
-                                      <div class="col-sm-3 col-xs-12"></div>
-                                      <div class="col-sm-9 col-xs-12">
-                                           <div class="row schoolInfo">
+                                         <div class="row schoolInfo">
                                          
                                          <div class="col-xs-12">
                                              <?php 
@@ -1113,17 +881,212 @@
                     </div>
 							  
 							<?php  
-							 
 							  $tot_results++;
-						  
-						  
-							  }
-						  
 						  }
 						 
 					 }
 					
+					  if(mysqli_num_rows($school_sel) > 2){
+						  while($school = mysqli_fetch_array($school_sel)) {
 							  
+							  $display = 1;
+							  if(isset($post['playground'])){
+								if(strlen($post['playground']) > 0){
+								   
+								   if($entity_type == 0)
+									$display = $database->get_name('school_facilities_info','school_code',$school['school_code'],'playground_present');
+									
+									 if($entity_type == 1)
+									$display = $database->get_name('preschool_facilities_info','school_code',$school['school_code'],'playarea_present');	
+								}
+						      }
+							  
+							  
+							   if(isset($post['transportation'])){
+								if(strlen($post['transportation']) > 0){
+								  
+									 
+									$display = $database->get_name($main_table,'school_code',$school['school_code'],'transport_provided');	
+								}
+						      }
+						      
+							  if($display > 0){
+							  
+							  
+							 
+							 ?> 
+							  
+							  <div class="panel  panel-default"  >
+                          
+                        <div class="panel-heading">
+                           
+                            <h2 class="panel-title" ><a href="../school?sc=<?php echo $school['school_code'];?>" ><?php echo ucwords($school['school_name']);?></a></h2>
+                            
+                            <h5><i class="fa fa-map-marker"></i> <span class="loc"> <?php echo ucwords($school['location']);?></span>,  <?php echo ucwords($school['city']);?></h5>
+                            
+                            <div class="schoolCompare" title="Add to Compare" data-toggle="tooltip">
+                                <a class="btn btn-success btn-block btn-fab btn-raised " onclick="addToCompare('<?php echo $school['school_code'];?>','<?php echo ucwords($school['school_name']);?>','<?php echo ucwords($school['location']).", ".ucwords($school['city']);?>')"><i class="fa fa-expand"></i></a>
+                                
+                            </div>
+                            <div class="schoolRating">
+                               
+                                <a class="btn btn-warning btn-block btn-fab btn-raised " href="javascript:void(0)"><i class="fa fa-star"></i></a>
+                            <p><?php echo $school['ranking'];?></p>
+                            </div>
+                              
+                        </div>
+                        <div class="panel-body">
+                               
+                                      <div class="row">
+                                      <div class="col-sm-3 col-xs-3 schoolProfilePic">
+                                          <img src="<?php echo $session->get_school_logo($school['school_code']);?>" alt="No Logo" title="<?php echo ucwords($school['school_name']);?>" />
+                                      </div>
+                                     
+                                      <div class="col-sm-9 col-xs-9">
+                                         <div class="row">
+                                             <div class="col-xs-4">Board: <b>
+                                                    <?php $session->getBoards($school['school_code']);?>  
+                                                     
+                                                 </b></div>
+                                             <div class="col-xs-6">Medium: <b>
+                                                     <?php $session->getMediums($school['school_code']);?>  
+                                                 </b></div>
+                                             <div class="col-xs-2">Est. <b><?php echo $session->get_name($main_table,'school_code',$school['school_code'],'establishment_year');?></b></div>
+                                           
+                                         </div>
+                                          <div class="row">
+                                              <div class="col-xs-4"><i class="fa fa-phone"></i> <?php echo "+91-".$session->get_name($main_table,'school_code',$school['school_code'],'phone_number_1');
+											  if(strlen($session->get_name($main_table,'school_code',$school['school_code'],'phone_number_2')) > 0){
+												echo ', '.$session->get_name($main_table,'school_code',$school['school_code'],'phone_number_2');  
+											  }
+											  ?></div>
+                                              <div class="col-xs-6"><i class="fa fa-envelope"></i> <?php echo $session->get_name($main_table,'school_code',$school['school_code'],'email_id_1');?></div>
+                                              <div class="col-xs-2"><i class="fa fa-link "></i> <a href="http://<?php echo $session->get_name($main_table,'school_code',$school['school_code'],'website_url');?>"> Visit</a></div>
+                                           
+                                         </div>
+                                          
+                                         <div class="row schoolInfo">
+                                         
+                                         <div class="col-xs-12">
+                                             <?php 
+											     $intro = $session->get_name($main_table,'school_code',$school['school_code'],'school_introduction');
+											     if(strlen($intro) > 50)
+												   $intro =substr($intro,0,50).'...';
+													
+											     echo ucfirst($intro);		
+											 ?>
+                                         </div>
+                                         </div>
+                                         
+                                      <div class="row">
+                                       <div class="col-xs-12 featuresList">
+                                                  
+                                                  
+                                                   <?php
+												     
+													 if($school['school_type'] == 1){
+														?>
+                                                        <span class="ficon" title="Boys">
+                                              
+                                                        <i class="fa fa-2x fa-male text-success" ></i>
+                                                       </span>
+                                                        <?php 
+													 }
+													 if($school['school_type'] == 2){
+														?>
+                                                        <span class="ficon" title="Girls">
+                                              
+                                                       <i class="fa fa-2x fa-female text-success" ></i>
+                                                       </span>
+                                                        <?php 
+													 }
+													 if($school['school_type'] == 3){
+														?>
+                                                         <span class="ficon" title="Co-Educational">
+                                              
+                                                       <i class="fa fa-2x fa-male text-success" ></i>
+                                                       <i class="fa fa-2x fa-female text-success" ></i>
+                                                       </span>
+                                                        <?php 
+													 }
+													 if($entity_type == 0){
+													    
+												       $facilities_sel = $database->query("SELECT * FROM school_facilities_info WHERE school_code = '".$school['school_code']."'");
+					                                    
+														if(mysqli_num_rows($facilities_sel) > 0){
+														   $facility = mysqli_fetch_array($facilities_sel);
+														   ?>
+                                                             
+                                                             
+                                                          <span class="ficon" title="<?php $facility['no_of_books_lib'].' books';?>">
+                                                            <i class="fa fa-2x fa-book <?php  if($facility['library_present'] == 1){ echo "text-success"; }?>"></i>
+                                                          </span>
+                                                           <span class="ficon" title="Transportation">
+                                                            <i class="fa fa-2x fa-bus <?php  if($facility['transport_provided'] == 1){ echo "text-success"; }?>"></i>
+                                                          </span>
+                                                           <span class="ficon" title="Internet">
+                                                            <i class="fa fa-2x fa-wifi <?php  if($facility['internet'] == 1){ echo "text-success"; }?>"></i>
+                                                          </span>
+                                                           <span class="ficon" title="<?php $facility['no_of_computers'].' computers';?>">
+                                                            <i class="fa fa-2x fa-desktop <?php  if($facility['no_of_computers'] > 0){ echo "text-success"; }?>"></i>
+                                                          </span>
+                                                           <span class="ficon" title="Playground">
+                                                            <i class="fa fa-2x fa-futbol-o <?php  if($facility['playground_present'] == 1){ echo "text-success"; }?>"></i>
+                                                          </span>
+                                                           <span class="ficon" title="Medical Checkup">
+                                                            <i class="fa fa-2x fa-medkit <?php  if($facility['medical_checkup'] == 1){ echo "text-success"; }?>"></i>
+                                                          </span>    
+                                                              
+                                                             <span class="ficon" title="Cafeteria">
+                                                            <i class="fa fa-2x fa-coffee <?php  if($facility['cafeteria_present'] == 1){ echo "text-success"; }?>"></i>
+                                                          </span>    
+                                                              
+                                                            <span class="ficon" title="Hostel">
+                                                            <i class="fa fa-2x fa-bed <?php  if($facility['boys_hostel'] > 0 || $facility['girls_hostel'] > 0){ echo "text-success"; }?>"></i>
+                                                          </span>    
+                                                              
+                                                             <span class="ficon" title="<?php $facility['no_of_books_lib'].' books';?>">
+                                                            <i class="fa fa-2x fa-book <?php  if($facility['library_present'] == 1){ echo "text-success"; }?>"></i>
+                                                          </span>    
+                                                              
+                                                                        
+                                                              
+                                                              
+                                                            <?php   
+														   
+														   	
+														}
+																					    	 
+														 
+													 }
+												  
+												  ?>
+                                                  
+                                                  
+                                        
+                                         
+                                       </div>
+                                       
+                                      </div>
+                                      </div>
+                                      </div>
+                                      
+                                      
+                        </div>
+                    </div>
+							  
+							<?php  
+							 
+							  $tot_results++;
+						  
+						  
+							  }
+						  
+						  }
+					 }
+						 
+				 
+				 
 				 ?>
      
      
@@ -1153,72 +1116,19 @@
              </div>
              
              <div class="col-md-4 col-sm-8">
-             <?php
-			      reset($loc_array);
-				  
-				  $ad_con = "( ad_validity > '".time()."' AND status = 1)";
-				  
-				  
-				  $loc_con = '';
-				  foreach($loc_array as $loc){
-					  if(strlen($loc_con) > 0)
-					    $loc_con.= " OR ";
-					  
-					  $loc_con.= " ad_location LIKE '%".$loc."%' ";  
-				  }
-				  
-				  if(strlen($loc_con) > 0){
-					   $ad_con = $ad_con.' AND '.$loc_con;  
-				  }
-				  
-				  $filter_con = '';
-				  
-						if(isset($post['board'])){
-							if(strlen($post['board']) > 0){
-							if(strlen($filter_con) > 0)
-							   $filter_con.= " AND ";
-							
-						   $filter_con.= " ad_board LIKE '%".$post['board']."%' ";	
-							}
-						}
-						
-						if(isset($post['fee_range'])){
-							if(strlen($post['fee_range']) > 0){
-								
-								$fee = explode(',',trim($post['fee_range']));
-								
-							if(strlen($filter_con) > 0)
-							   $filter_con.= " AND ";
-							
-						   $filter_con.= " ad_fee_range_lower <= '".$fee[0]."' AND  ad_fee_range_upper >= '".$fee[1]."' ";	
-							}
-						}
-					
-					
-					if(strlen($filter_con) > 0)
-					   $filter_con = " AND (".$filter_con.")";
-					
-					
-					
-					 $q = "SELECT * FROM ads WHERE ".$ad_con." ".$filter_con." LIMIT 0,3";
-					$ad_sel  = $database->query($q);
-					
-					if(mysqli_num_rows($ad_sel) > 0){
-					   while($ad = mysqli_fetch_array($ad_sel))	{
-						?>
-                          <div class="adBox">
-                          <a href="<?php echo $ad['ad_url'];?>" title="<?php echo ucwords($ad['ad_title']);?>" target="_blank" >
-               <img src="<?php echo SECURE_PATH;?>photos/ads/<?php echo $ad['ad_image'];?>" title="<?php echo ucwords($ad['ad_title']);?>" />
-                </a>
+             
+                <div class="adBox">
+                Ads here
+                
                 </div>
-                        <?php   
-					   }
-					}
-				  
-			 
-			 ?>
-               
-               
+                <div class="adBox">
+                Ads here
+                
+                </div>
+                <div class="adBox">
+                Ads here
+                
+                </div>
              </div>
          
          
@@ -1251,14 +1161,14 @@
 
   if($tot_results == 0){
 	?>
-<script type="text/javascript">
+     <script type="text/javascript">
 							    
 							      $('#prefill').val('');
 								  initAutocomplete();
 								  
 								  $('#location').focus()
 							   $('.selectpicker').selectpicker();
-</script>
+							   </script>
 <?php  
 	
   }

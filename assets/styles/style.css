@@ -614,10 +614,10 @@ Features_2 & Features_3
 Home_block 2 & 3
 =============================================== */
 .home_block_1 {
-	background: url(../images/about_us.jpg) top center fixed;
+	background: url(../../photos/pencil-sharpener-838605_1920.jpg) top center fixed;
 }
 .home_block_2 {
-	background: url(../images/about_us.jpg) top center fixed;
+	background:  url(../../photos/pencil-sharpener-838605_1920.jpg)top center fixed;
 }
 .home_block_1 .container-fluid > div, .home_block_2 .container-fluid > div {
 	background: rgba(255,255,255,.85);
@@ -686,10 +686,10 @@ Services
 	right: 0;
 }
 .services {
-	background: url(../images/services_1.jpg) top center fixed;
+	background: url(../../photos/classroom-824120_1920.jpg) top center fixed;
 }
 .services.style_2 {
-	background: url(../images/services_2.jpg) top center fixed;
+	background: url(../../photos/classroom-824120_1920.jpg) top center fixed;
 }
 .services {
 	text-align: center;
@@ -1006,7 +1006,7 @@ News & Blog items
  Testimonials
 =============================================== */
 .testimonials {
-	background: url(../images/testimonials.jpg) center center fixed;
+	background: url(../../photos/kitchen-table-349702_1920.jpg) center center fixed;
 	padding: 120px 0;
 	color: #FFF;
 	text-align: center;
@@ -1146,7 +1146,7 @@ Clients
 Contact Us
 =============================================== */
 .contact {
-	background: url(../images/contact.jpg) bottom center fixed;
+	background: url(../../photos/school-926213_1920.jpg) bottom center fixed;
 	color: #DDD;
 }
 .contact_info {
@@ -1491,7 +1491,7 @@ Breadcrumb
 	overflow: hidden;
 	text-align: center;
 	color: #FFF;
-	background: #222 url(../images/breadcrumb.jpg) top center fixed;
+	background: #222 url(../../photos/person-1030053_1280.jpg) top center fixed;
 	position: relative;
 	padding-bottom: 40px;
 	padding-top: 40px;
@@ -1509,8 +1509,8 @@ Breadcrumb
 	font-size: 18px;
 	color: #FFF;
 }
-.breadcrumb li.active {
-	color: #FFF;
+.breadcrumb li a {
+	color: #00b7c3;
 }
 .breadcrumb li a {
 	font-size: 18px;
@@ -1607,6 +1607,7 @@ Mobile and Tablet Screen
 .home_block_1 div > div.pull-right,.home_block_2 div > div.pull-right{
 	float:none !important;
 }
+ 
 }
 /* ==============================================
 Mobile Screen
@@ -1680,6 +1681,7 @@ display:block;
 .basic_search{
  width:85%;	
 }
+ 
 }
 /* ==============================================
 Tablet and Desktop Screen

@@ -1,6 +1,6 @@
 <?php
  
-define("BASEURL", "http://www.example.com/");
+define("BASEURL", "http://www.goolschool.com/");
 
 /**
  * Database Constants - these constants are required
@@ -11,14 +11,14 @@ define("BASEURL", "http://www.example.com/");
  
 
 
-define("DB_SERVER", "localhost");
+define("DB_SERVER", "testawsinstance.chmolzzflemx.ap-northeast-1.rds.amazonaws.com");
  
-define("DB_USER", "root");
-define("DB_PASS", "");
+define("DB_USER", "prabal77");
+define("DB_PASS", "Metallica77!");
 
 //define("DB_PASS", "");
 
-define("DB_NAME", "gschooldev");
+define("DB_NAME", "goolschool_input");
 
 /**
  * Database Table Constants - these constants
@@ -102,13 +102,13 @@ define("ABSPATH", dirname(__FILE__).'/');
 define("MAIL", true);
 
 
- define('FULL_PATH','C://wamp/www/gschooldev/');
+ define('FULL_PATH','/var/www/html/');
 
-define('SECURE_PATH','http://'.$_SERVER['HTTP_HOST'].'/gschooldev/');
-define('CSS_PATH','http://'.$_SERVER['HTTP_HOST'].'/gschooldev/assets/styles/');
-define('JS_PATH','http://'.$_SERVER['HTTP_HOST'].'/gschooldev/assets/js/');
+define('SECURE_PATH','http://'.$_SERVER['HTTP_HOST'].'/');
+define('CSS_PATH','http://'.$_SERVER['HTTP_HOST'].'/assets/styles/');
+define('JS_PATH','http://'.$_SERVER['HTTP_HOST'].'/assets/js/');
  
- define('IMG_PATH','http://'.$_SERVER['HTTP_HOST'].'/gschooldev/assets/images/');
+ define('IMG_PATH','http://'.$_SERVER['HTTP_HOST'].'/assets/images/');
  
 
 ?>
